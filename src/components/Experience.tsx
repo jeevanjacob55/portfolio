@@ -1,74 +1,140 @@
-import { useState } from "react";
-import { ChevronDown } from "lucide-react";
+import { useEffect, useRef, useState, type KeyboardEvent, type MouseEvent, type PointerEvent } from "react";
+import { ChevronDown, MapPin } from "lucide-react";
 import { experience } from "../data/experience";
 
 export default function Experience() {
-  const [openId, setOpenId] = useState<string | null>(experience[0]?.id ?? null);
+  const [activeId, setActiveId] = useState<string | null>(null);
+  const leaveTimer = useRef<number | null>(null);
+
+  useEffect(() => () => {
+    if (leaveTimer.current !== null) window.clearTimeout(leaveTimer.current);
+  }, []);
+
+  const handlePointerEnter = (event: PointerEvent<HTMLElement>, id: string) => {
+    if (
+      event.pointerType !== "touch" &&
+      window.matchMedia("(hover: hover) and (pointer: fine)").matches
+    ) {
+      if (leaveTimer.current !== null) window.clearTimeout(leaveTimer.current);
+      leaveTimer.current = null;
+      setActiveId(id);
+    }
+  };
+
+  const handlePointerLeave = (event: PointerEvent<HTMLElement>) => {
+    if (
+      event.pointerType === "touch" ||
+      !window.matchMedia("(hover: hover) and (pointer: fine)").matches
+    ) return;
+
+    const nextEntry = event.relatedTarget instanceof Element
+      ? event.relatedTarget.closest<HTMLElement>("[data-experience-entry]")
+      : null;
+    if (nextEntry) {
+      if (leaveTimer.current !== null) window.clearTimeout(leaveTimer.current);
+      leaveTimer.current = null;
+      setActiveId(nextEntry.dataset.experienceEntry ?? null);
+    } else {
+      leaveTimer.current = window.setTimeout(() => {
+        setActiveId(null);
+        leaveTimer.current = null;
+      }, 90);
+    }
+  };
+
+  const handleKeyDown = (event: KeyboardEvent<HTMLElement>, id: string) => {
+    if (event.key !== "Enter" && event.key !== " ") return;
+    event.preventDefault();
+    setActiveId((current) => (current === id ? null : id));
+  };
+
+  const handleClick = (event: MouseEvent<HTMLElement>, id: string) => {
+    const pointerType = (event.nativeEvent as unknown as { pointerType?: string }).pointerType;
+    const assistiveActivation = event.detail === 0;
+    const touchActivation = pointerType === "touch" ||
+      !window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+
+    if (assistiveActivation || touchActivation) {
+      setActiveId((current) => (current === id ? null : id));
+    }
+  };
 
   return (
     <section id="experience" className="py-24 px-6 sm:px-10">
-      <div className="max-w-4xl mx-auto">
-        <h2 className="font-display text-3xl text-ink mb-12">Experience</h2>
+      <div className="max-w-5xl mx-auto">
+        <h2 className="font-display font-semibold text-3xl text-ink text-center mb-14">
+          Experience
+        </h2>
 
-        <div className="border-l border-hairline">
+        <div className="experience-timeline">
           {experience.map((entry) => {
-            const isOpen = openId === entry.id;
+            const isOpen = activeId === entry.id;
+            const detailsId = `experience-details-${entry.id}`;
+
             return (
-              <div key={entry.id} className="relative pl-8 pb-10 last:pb-0">
-                <span className="absolute -left-[5px] top-1.5 w-2.5 h-2.5 rounded-full bg-mint" />
+              <article
+                key={entry.id}
+                className="experience-entry"
+                data-experience-entry={entry.id}
+                onPointerEnter={(event) => handlePointerEnter(event, entry.id)}
+                onPointerLeave={handlePointerLeave}
+              >
+                <div
+                  className="experience-entry__main"
+                  role="button"
+                  tabIndex={0}
+                  aria-expanded={isOpen}
+                  aria-controls={detailsId}
+                  onKeyDown={(event) => handleKeyDown(event, entry.id)}
+                  onClick={(event) => handleClick(event, entry.id)}
+                >
+                  <p className="experience-entry__date">{entry.dates}</p>
+                  <span className="experience-entry__marker" aria-hidden="true" />
 
-                <div className="grid sm:grid-cols-[140px_1fr] gap-x-6 gap-y-2">
-                  <p className="text-sm text-muted pt-0.5">{entry.dates}</p>
-
-                  <div>
-                    <button
-                      onClick={() => setOpenId(isOpen ? null : entry.id)}
-                      className="w-full flex items-start justify-between gap-4 text-left group"
-                    >
-                      <div>
-                        <h3 className="text-ink font-medium">{entry.role}</h3>
-                        <p className="text-muted text-sm mt-0.5">
-                          {entry.company} · {entry.location}
-                        </p>
-                      </div>
+                  <div className="experience-entry__content">
+                    <div className="experience-entry__heading">
+                      <h3 className="experience-entry__role">{entry.role}</h3>
                       <ChevronDown
+                        className={`experience-entry__chevron${isOpen ? " is-open" : ""}`}
                         size={18}
-                        className={`shrink-0 mt-1 text-muted transition-transform duration-300 ${
-                          isOpen ? "rotate-180 text-mint" : ""
-                        }`}
+                        aria-hidden="true"
                       />
-                    </button>
-
-                    <p className="text-muted text-sm mt-3 leading-relaxed">{entry.summary}</p>
-
-                    <div
-                      className={`grid transition-all duration-300 ease-out ${
-                        isOpen ? "grid-rows-[1fr] opacity-100 mt-4" : "grid-rows-[0fr] opacity-0"
-                      }`}
-                    >
-                      <div className="overflow-hidden">
-                        <ul className="space-y-2 text-sm text-muted list-disc pl-4">
-                          {entry.details.map((d, i) => (
-                            <li key={i}>{d}</li>
-                          ))}
-                        </ul>
-                        {entry.stack && (
-                          <div className="flex flex-wrap gap-2 mt-4">
-                            {entry.stack.map((s) => (
-                              <span
-                                key={s}
-                                className="text-xs px-2.5 py-1 rounded-full border border-hairline text-muted"
-                              >
-                                {s}
-                              </span>
-                            ))}
-                          </div>
-                        )}
-                      </div>
                     </div>
+                    <p className="experience-entry__secondary experience-entry__company">
+                      {entry.company}
+                    </p>
+                    <p className="experience-entry__secondary experience-entry__location">
+                      <MapPin size={14} aria-hidden="true" />
+                      <span>{entry.location}</span>
+                    </p>
                   </div>
                 </div>
-              </div>
+
+                <div
+                  id={detailsId}
+                  className={`experience-entry__details${isOpen ? " is-open" : ""}`}
+                  role="region"
+                  aria-label={`${entry.role} at ${entry.company} details`}
+                  aria-hidden={!isOpen}
+                  onClick={(event) => handleClick(event, entry.id)}
+                >
+                  <div className="experience-entry__details-inner">
+                    <p className="experience-entry__description">{entry.summary}</p>
+                    <ul className="experience-entry__list">
+                      {entry.details.map((detail, index) => (
+                        <li key={`${entry.id}-detail-${index}`}>{detail}</li>
+                      ))}
+                    </ul>
+                    {entry.stack && (
+                      <div className="experience-entry__stack">
+                        {entry.stack.map((technology) => (
+                          <span key={technology}>{technology}</span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </article>
             );
           })}
         </div>
