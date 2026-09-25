@@ -8,7 +8,7 @@ interface ProjectCardProps {
 
 export default function ProjectCard({ project, onOpen }: ProjectCardProps) {
   return (
-    <div className="flex flex-col h-full rounded-2xl border border-hairline bg-card overflow-hidden hover:border-mint/30 transition-colors">
+    <div className="cursor-hover-target flex flex-col h-full rounded-2xl border border-hairline bg-card overflow-hidden hover:border-mint/30 transition-colors">
       <ImageCarousel images={project.images} alt={project.title} />
 
       <div className="flex flex-col flex-1 p-5">

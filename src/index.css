@@ -288,3 +288,47 @@ textarea:focus-visible {
     animation: none;
   }
 }
+
+/* ---------- Fine-pointer cursor follower ---------- */
+.cursor-follower {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 180ms ease;
+  will-change: transform;
+}
+
+.cursor-follower__orb {
+  display: block;
+  width: 11px;
+  height: 11px;
+  border: 1px solid rgba(186, 230, 253, 0.9);
+  border-radius: 50%;
+  background: rgba(14, 165, 233, 0.68);
+  box-shadow: 0 0 8px rgba(14, 165, 233, 0.48), 0 0 22px rgba(14, 165, 233, 0.2);
+  transform: translate(-50%, -50%) scale(1);
+  transition: transform 220ms cubic-bezier(0.2, 0.75, 0.25, 1), background-color 220ms ease;
+}
+
+.cursor-follower.is-hovered .cursor-follower__orb {
+  background: rgba(125, 211, 252, 0.78);
+  transform: translate(-50%, -50%) scale(1.65);
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  html.custom-cursor-enabled,
+  html.custom-cursor-enabled * {
+    cursor: none !important;
+  }
+}
+
+@media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .cursor-follower {
+    display: none;
+  }
+}

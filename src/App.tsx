@@ -1,4 +1,5 @@
 import AnimatedBackground from "./components/AnimatedBackground";
+import CursorFollower from "./components/CursorFollower";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import Experience from "./components/Experience";
@@ -12,6 +13,7 @@ export default function App() {
   return (
     <div className="relative isolate min-h-screen">
       <AnimatedBackground />
+      <CursorFollower />
       <Navbar />
       <div className="site-content">
         <main>
