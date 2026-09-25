@@ -37,7 +37,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
             role="dialog"
             aria-modal="true"
             aria-label={project.title}
-            className="relative w-full max-w-2xl max-h-[85vh] overflow-y-auto rounded-2xl border border-hairline bg-[#09090B]"
+            className="relative w-full max-w-2xl max-h-[85vh] overflow-y-auto rounded-2xl border border-hairline bg-[#082746]"
             initial={{ opacity: 0, y: 16, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 10, scale: 0.98 }}

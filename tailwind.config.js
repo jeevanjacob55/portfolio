@@ -4,13 +4,13 @@ export default {
   theme: {
     extend: {
       colors: {
-        bg: "#050A08",
-        emerald: "#047857",
-        teal: "#0D9488",
-        mint: "#6EE7B7",
-        ink: "#F8FAFC",
-        muted: "#A1A1AA",
-        card: "#09090B",
+        bg: "#051912",
+        emerald: "#082746",
+        teal: "#1D4ED8",
+        mint: "#7DD3FC",
+        ink: "#F9FAFB",
+        muted: "#CBD5E1",
+        card: "#082746",
       },
       fontFamily: {
         display: ["'Fraunces'", "serif"],

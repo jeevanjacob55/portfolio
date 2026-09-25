@@ -121,7 +121,7 @@ export default function Contact() {
           <button
             type="submit"
             disabled={status === "loading"}
-            className="w-full inline-flex items-center justify-center gap-2 rounded-lg bg-mint text-[#050A08] font-medium text-sm py-2.5 hover:bg-mint/90 transition-colors disabled:opacity-60"
+            className="w-full inline-flex items-center justify-center gap-2 rounded-lg bg-mint text-[#051912] font-medium text-sm py-2.5 hover:bg-mint/90 transition-colors disabled:opacity-60"
           >
             <Send size={15} />
             {status === "loading" ? "Sending…" : "Send message"}

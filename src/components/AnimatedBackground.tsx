@@ -73,18 +73,18 @@ const FRAGMENT_SHADER = `
     float cloudField = field + (current - 0.5) * 0.16;
     float whiteFlow = smoothstep(0.43, 0.69, cloudField);
     float skyFlow = smoothstep(0.34, 0.67, current + (detail - 0.5) * 0.12);
-    vec3 color = mix(vec3(0.0196, 0.0980, 0.0706), vec3(0.0510, 0.1490, 0.1098), whiteFlow * 0.78);
-    color = mix(color, vec3(0.1020, 0.2980, 0.2235), skyFlow * 0.42);
+    vec3 color = mix(vec3(0.0196, 0.0980, 0.0706), vec3(0.9765, 0.9804, 0.9843), whiteFlow * 0.78);
+    color = mix(color, vec3(0.0314, 0.1529, 0.2745), skyFlow * 0.42);
 
     float lowerFlow = smoothstep(-0.48, 0.2, -p.y + (warpA.x - 0.5) * 0.36);
     float edgeFlow = smoothstep(0.42, 1.02, length(p * vec2(0.68, 0.82)));
     float cyanField = detail + (field - 0.5) * 0.16;
     float cyanFlow = smoothstep(0.49, 0.7, cyanField) * (0.52 * lowerFlow + 0.34 * edgeFlow + 0.14);
-    color = mix(color, vec3(0.1490, 0.4510, 0.3333), cyanFlow * 0.48);
+    color = mix(color, vec3(0.0314, 0.1529, 0.2745), cyanFlow * 0.48);
 
     float electricField = current + (detail - 0.5) * 0.14;
     float electricFlow = smoothstep(0.56, 0.75, electricField) * smoothstep(0.34, 0.55, field);
-    color = mix(color, vec3(0.1922, 0.6078, 0.4471), electricFlow * 0.32);
+    color = mix(color, vec3(0.0314, 0.1529, 0.2745), electricFlow * 0.32);
 
     // Keep a softly warped blue field behind the centered white hero text.
     float centerFlow = 1.0 - smoothstep(
@@ -93,7 +93,7 @@ const FRAGMENT_SHADER = `
       length((p + (warpA - 0.5) * 0.34) * vec2(0.58, 0.9))
     );
     centerFlow *= smoothstep(0.24, 0.54, current + (detail - 0.5) * 0.12);
-    color = mix(color, vec3(0.0510, 0.1490, 0.1098), centerFlow * 0.52);
+    color = mix(color, vec3(0.0314, 0.1529, 0.2745), centerFlow * 0.52);
 
     gl_FragColor = vec4(color, 1.0);
   }
