@@ -12,14 +12,14 @@ html {
 }
 
 body {
-  background-color: #050a08;
+  background-color: #030712;
   color: #f8fafc;
   font-family: "Inter", sans-serif;
   overflow-x: hidden;
 }
 
 ::selection {
-  background: rgba(110, 231, 183, 0.25);
+  background: rgba(14, 165, 233, 0.28);
   color: #f8fafc;
 }
 
@@ -28,80 +28,103 @@ a:focus-visible,
 button:focus-visible,
 input:focus-visible,
 textarea:focus-visible {
-  outline: 2px solid #6ee7b7;
+  outline: 2px solid #7dd3fc;
   outline-offset: 3px;
   border-radius: 4px;
 }
 
-/* ---------- Animated mesh gradient background ---------- */
+/* ---------- Slow liquid blue mesh background ---------- */
 .mesh-bg {
   position: fixed;
   inset: 0;
   z-index: -1;
   pointer-events: none;
   overflow: hidden;
-  background: #050a08;
+  isolation: isolate;
+  background:
+    radial-gradient(ellipse at 48% 44%, rgba(11, 31, 58, 0.5), transparent 58%),
+    #030712;
 }
 
-.mesh-bg::before,
-.mesh-bg::after,
-.mesh-blob {
-  content: "";
+.mesh-layer {
   position: absolute;
   border-radius: 50%;
-  filter: blur(110px);
-  opacity: 0.55;
+  transform: translate3d(0, 0, 0);
   will-change: transform;
 }
 
-.mesh-bg::before {
-  width: 60vw;
-  height: 60vw;
-  top: -10%;
-  left: -10%;
-  background: radial-gradient(circle at center, #047857, transparent 70%);
-  animation: drift-a 34s ease-in-out infinite;
+.mesh-layer--navy {
+  width: min(82vw, 1050px);
+  aspect-ratio: 1.2;
+  top: -27%;
+  left: -24%;
+  opacity: 0.68;
+  filter: blur(clamp(72px, 10vw, 150px));
+  background: radial-gradient(ellipse at 48% 52%, #0b1f3a 0%, rgba(11, 31, 58, 0.72) 30%, transparent 72%);
+  animation: current-a 58s ease-in-out infinite;
 }
 
-.mesh-bg::after {
-  width: 55vw;
-  height: 55vw;
-  bottom: -15%;
-  right: -10%;
-  background: radial-gradient(circle at center, #0d9488, transparent 70%);
-  animation: drift-b 40s ease-in-out infinite;
+.mesh-layer--royal {
+  width: min(74vw, 940px);
+  aspect-ratio: 1.28;
+  top: 16%;
+  right: -29%;
+  opacity: 0.4;
+  filter: blur(clamp(80px, 11vw, 160px));
+  background: radial-gradient(ellipse at 42% 48%, rgba(29, 78, 216, 0.82), rgba(29, 78, 216, 0.42) 32%, transparent 72%);
+  animation: current-b 72s ease-in-out infinite;
 }
 
-.mesh-blob {
-  width: 40vw;
-  height: 40vw;
-  top: 35%;
-  left: 30%;
-  background: radial-gradient(circle at center, #6ee7b7, transparent 72%);
-  opacity: 0.25;
-  animation: drift-c 46s ease-in-out infinite;
+.mesh-layer--ocean {
+  width: min(68vw, 860px);
+  aspect-ratio: 1.5;
+  bottom: -38%;
+  left: 4%;
+  opacity: 0.3;
+  filter: blur(clamp(84px, 12vw, 170px));
+  background: radial-gradient(ellipse at 50% 45%, rgba(14, 165, 233, 0.7), rgba(14, 165, 233, 0.24) 35%, transparent 74%);
+  animation: current-c 64s ease-in-out infinite;
 }
 
-@keyframes drift-a {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(12vw, 10vh) scale(1.15); }
+.mesh-layer--ice {
+  width: min(42vw, 560px);
+  aspect-ratio: 1.4;
+  top: 43%;
+  left: 28%;
+  opacity: 0.13;
+  filter: blur(clamp(78px, 10vw, 140px));
+  background: radial-gradient(ellipse at center, rgba(125, 211, 252, 0.72), rgba(125, 211, 252, 0.2) 30%, transparent 72%);
+  animation: current-d 86s ease-in-out infinite;
 }
 
-@keyframes drift-b {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(-10vw, -8vh) scale(1.1); }
+@keyframes current-a {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1) rotate(0deg); }
+  33% { transform: translate3d(7vw, 8vh, 0) scale(1.08) rotate(8deg); }
+  68% { transform: translate3d(13vw, 2vh, 0) scale(0.96) rotate(-5deg); }
 }
 
-@keyframes drift-c {
-  0%, 100% { transform: translate(-5vw, 0) scale(1); }
-  50% { transform: translate(6vw, -6vh) scale(1.2); }
+@keyframes current-b {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1) rotate(0deg); }
+  34% { transform: translate3d(-9vw, -8vh, 0) scale(1.12) rotate(-9deg); }
+  70% { transform: translate3d(-4vw, 7vh, 0) scale(0.94) rotate(5deg); }
+}
+
+@keyframes current-c {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1) rotate(0deg); }
+  36% { transform: translate3d(8vw, -9vh, 0) scale(1.1) rotate(6deg); }
+  72% { transform: translate3d(-8vw, -4vh, 0) scale(0.97) rotate(-7deg); }
+}
+
+@keyframes current-d {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1) rotate(0deg); }
+  32% { transform: translate3d(-7vw, 6vh, 0) scale(1.15) rotate(-12deg); }
+  66% { transform: translate3d(9vw, -7vh, 0) scale(0.92) rotate(8deg); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .mesh-bg::before,
-  .mesh-bg::after,
-  .mesh-blob {
+  .mesh-layer {
     animation: none !important;
+    will-change: auto;
   }
   html {
     scroll-behavior: auto;
@@ -114,7 +137,7 @@ textarea:focus-visible {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: radial-gradient(circle at 30% 20%, #0d9488 0%, #050a08 70%);
+  background: radial-gradient(circle at 30% 20%, #1d4ed8 0%, #030712 70%);
   color: rgba(248, 250, 252, 0.4);
   font-family: "Fraunces", serif;
   font-size: 0.95rem;
@@ -123,9 +146,14 @@ textarea:focus-visible {
 }
 
 @media (max-width: 640px) {
-  .mesh-bg::before,
-  .mesh-bg::after,
-  .mesh-blob {
-    filter: blur(70px);
+  .mesh-layer--navy,
+  .mesh-layer--royal,
+  .mesh-layer--ocean,
+  .mesh-layer--ice {
+    filter: blur(64px);
+  }
+
+  .mesh-layer--ice {
+    opacity: 0.09;
   }
 }
