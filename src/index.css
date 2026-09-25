@@ -23,6 +23,12 @@ body {
   color: #f8fafc;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
 /* Visible keyboard focus ring, consistent across interactive elements */
 a:focus-visible,
 button:focus-visible,
@@ -41,99 +47,21 @@ textarea:focus-visible {
   pointer-events: none;
   overflow: hidden;
   isolation: isolate;
-  background:
-    radial-gradient(ellipse at 48% 44%, rgba(11, 31, 58, 0.5), transparent 58%),
-    #030712;
+  background: radial-gradient(ellipse at 52% 42%, #0b1f3a 0%, #071326 38%, #030712 78%);
+}
+
+.mesh-canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
 }
 
 .site-content {
   position: relative;
   z-index: 1;
-}
-
-.mesh-layer {
-  position: absolute;
-  border-radius: 50%;
-  transform: translate3d(0, 0, 0);
-  will-change: transform;
-}
-
-.mesh-layer--navy {
-  width: min(82vw, 1050px);
-  aspect-ratio: 1.2;
-  top: -27%;
-  left: -24%;
-  opacity: 0.76;
-  filter: blur(clamp(64px, 9vw, 128px));
-  background: radial-gradient(ellipse at 48% 52%, #0b1f3a 0%, rgba(11, 31, 58, 0.72) 30%, transparent 72%);
-  animation: current-a 24s ease-in-out infinite;
-}
-
-.mesh-layer--royal {
-  width: min(74vw, 940px);
-  aspect-ratio: 1.28;
-  top: 16%;
-  right: -29%;
-  opacity: 0.64;
-  filter: blur(clamp(72px, 10vw, 136px));
-  background: radial-gradient(ellipse at 42% 48%, rgba(29, 78, 216, 0.82), rgba(29, 78, 216, 0.42) 32%, transparent 72%);
-  animation: current-b 29s ease-in-out infinite;
-}
-
-.mesh-layer--ocean {
-  width: min(68vw, 860px);
-  aspect-ratio: 1.5;
-  bottom: -38%;
-  left: 4%;
-  opacity: 0.5;
-  filter: blur(clamp(76px, 10vw, 144px));
-  background: radial-gradient(ellipse at 50% 45%, rgba(14, 165, 233, 0.7), rgba(14, 165, 233, 0.24) 35%, transparent 74%);
-  animation: current-c 26s ease-in-out infinite;
-}
-
-.mesh-layer--ice {
-  width: min(42vw, 560px);
-  aspect-ratio: 1.4;
-  top: 43%;
-  left: 28%;
-  opacity: 0.16;
-  filter: blur(clamp(70px, 9vw, 120px));
-  background: radial-gradient(ellipse at center, rgba(125, 211, 252, 0.72), rgba(125, 211, 252, 0.2) 30%, transparent 72%);
-  animation: current-d 32s ease-in-out infinite;
-}
-
-@keyframes current-a {
-  0%, 100% { transform: translate3d(0, 0, 0) scale(1) rotate(0deg); }
-  33% { transform: translate3d(7vw, 8vh, 0) scale(1.08) rotate(8deg); }
-  68% { transform: translate3d(13vw, 2vh, 0) scale(0.96) rotate(-5deg); }
-}
-
-@keyframes current-b {
-  0%, 100% { transform: translate3d(0, 0, 0) scale(1) rotate(0deg); }
-  34% { transform: translate3d(-9vw, -8vh, 0) scale(1.12) rotate(-9deg); }
-  70% { transform: translate3d(-4vw, 7vh, 0) scale(0.94) rotate(5deg); }
-}
-
-@keyframes current-c {
-  0%, 100% { transform: translate3d(0, 0, 0) scale(1) rotate(0deg); }
-  36% { transform: translate3d(8vw, -9vh, 0) scale(1.1) rotate(6deg); }
-  72% { transform: translate3d(-8vw, -4vh, 0) scale(0.97) rotate(-7deg); }
-}
-
-@keyframes current-d {
-  0%, 100% { transform: translate3d(0, 0, 0) scale(1) rotate(0deg); }
-  32% { transform: translate3d(-7vw, 6vh, 0) scale(1.15) rotate(-12deg); }
-  66% { transform: translate3d(9vw, -7vh, 0) scale(0.92) rotate(8deg); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .mesh-layer {
-    animation: none !important;
-    will-change: auto;
-  }
-  html {
-    scroll-behavior: auto;
-  }
 }
 
 /* Shown if profile.portrait fails to load (placeholder not yet replaced) */
@@ -148,19 +76,6 @@ textarea:focus-visible {
   font-size: 0.95rem;
   text-align: center;
   padding: 2rem;
-}
-
-@media (max-width: 640px) {
-  .mesh-layer--navy,
-  .mesh-layer--royal,
-  .mesh-layer--ocean,
-  .mesh-layer--ice {
-    filter: blur(64px);
-  }
-
-  .mesh-layer--ice {
-    opacity: 0.09;
-  }
 }
 
 /* ---------- Accessible, layout-stable hero typewriter ---------- */
