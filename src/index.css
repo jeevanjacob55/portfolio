@@ -63,10 +63,10 @@ textarea:focus-visible {
   aspect-ratio: 1.2;
   top: -27%;
   left: -24%;
-  opacity: 0.68;
-  filter: blur(clamp(72px, 10vw, 150px));
+  opacity: 0.76;
+  filter: blur(clamp(64px, 9vw, 128px));
   background: radial-gradient(ellipse at 48% 52%, #0b1f3a 0%, rgba(11, 31, 58, 0.72) 30%, transparent 72%);
-  animation: current-a 28s ease-in-out infinite;
+  animation: current-a 24s ease-in-out infinite;
 }
 
 .mesh-layer--royal {
@@ -74,10 +74,10 @@ textarea:focus-visible {
   aspect-ratio: 1.28;
   top: 16%;
   right: -29%;
-  opacity: 0.52;
-  filter: blur(clamp(80px, 11vw, 160px));
+  opacity: 0.64;
+  filter: blur(clamp(72px, 10vw, 136px));
   background: radial-gradient(ellipse at 42% 48%, rgba(29, 78, 216, 0.82), rgba(29, 78, 216, 0.42) 32%, transparent 72%);
-  animation: current-b 34s ease-in-out infinite;
+  animation: current-b 29s ease-in-out infinite;
 }
 
 .mesh-layer--ocean {
@@ -85,10 +85,10 @@ textarea:focus-visible {
   aspect-ratio: 1.5;
   bottom: -38%;
   left: 4%;
-  opacity: 0.4;
-  filter: blur(clamp(84px, 12vw, 170px));
+  opacity: 0.5;
+  filter: blur(clamp(76px, 10vw, 144px));
   background: radial-gradient(ellipse at 50% 45%, rgba(14, 165, 233, 0.7), rgba(14, 165, 233, 0.24) 35%, transparent 74%);
-  animation: current-c 31s ease-in-out infinite;
+  animation: current-c 26s ease-in-out infinite;
 }
 
 .mesh-layer--ice {
@@ -96,10 +96,10 @@ textarea:focus-visible {
   aspect-ratio: 1.4;
   top: 43%;
   left: 28%;
-  opacity: 0.13;
-  filter: blur(clamp(78px, 10vw, 140px));
+  opacity: 0.16;
+  filter: blur(clamp(70px, 9vw, 120px));
   background: radial-gradient(ellipse at center, rgba(125, 211, 252, 0.72), rgba(125, 211, 252, 0.2) 30%, transparent 72%);
-  animation: current-d 38s ease-in-out infinite;
+  animation: current-d 32s ease-in-out infinite;
 }
 
 @keyframes current-a {
