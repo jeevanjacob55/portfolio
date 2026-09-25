@@ -65,7 +65,7 @@ textarea:focus-visible {
   pointer-events: none;
   overflow: hidden;
   isolation: isolate;
-  background: radial-gradient(ellipse at 52% 42%, #0b1f3a 0%, #071326 38%, #030712 78%);
+  background: linear-gradient(145deg, #c7e9f8 0%, #f8fcff 42%, #bde6f7 72%, #68cbe4 100%);
 }
 
 .mesh-canvas {
