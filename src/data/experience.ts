@@ -15,7 +15,7 @@ export const experience: ExperienceEntry[] = [
     role: "Software Developer Intern",
     company: "Army AI Research & Incubation Centre (AARIC)",
     location: "Bangalore, India",
-    dates: "Internship",
+    dates: "01/2026 - 04/2026",
     summary:
       "Developed and shipped a secure, offline-capable AI annotation platform used by Indian Army personnel for annotating large-scale image datasets for AI model training.",
     details: [
@@ -31,8 +31,8 @@ export const experience: ExperienceEntry[] = [
     id: "thextruder",
     role: "Frontend Developer",
     company: "TheXtruder",
-    location: "Remote",
-    dates: "Previous role",
+    location: "Thrissur, Kerala",
+    dates: "05/2025 - 06/2025",
     summary:
       "Developed a client-facing React website, working directly with clients to translate business requirements into responsive, functional web experiences.",
     details: [

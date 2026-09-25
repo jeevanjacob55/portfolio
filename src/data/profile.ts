@@ -1,10 +1,10 @@
 export const profile = {
   portrait: `${import.meta.env.BASE_URL}images/portrait.jpg`,
   location: "Kerala, India",
-  email: "your.email@example.com", // PLACEHOLDER
+  email: "jeevanjacobwork@gmail.com", // PLACEHOLDER
   social: {
-    github: "https://github.com/your-username", // PLACEHOLDER
-    linkedin: "https://linkedin.com/in/your-profile", // PLACEHOLDER
+    github: "https://github.com/jeevanjacob55", // PLACEHOLDER
+    linkedin: "https://linkedin.com/in/jeevanjacob1", // PLACEHOLDER
     resume: `${import.meta.env.BASE_URL}resume.pdf`,
   },
 };
