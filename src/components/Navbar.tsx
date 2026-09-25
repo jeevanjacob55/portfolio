@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Menu, X, FileText } from "lucide-react";
 import { profile } from "../data/profile";
+import { heroContent } from "../data/heroContent";
 
 const links = [
   { id: "about", label: "About" },
@@ -39,7 +40,7 @@ export default function Navbar() {
                    px-4 sm:px-6 py-2.5 flex items-center justify-between shadow-[0_0_40px_-10px_rgba(13,148,136,0.35)]"
       >
         <a href="#about" className="font-display text-lg tracking-tight text-ink shrink-0">
-          {profile.name.split(" ")[0]}
+          {heroContent.name.split(" ")[0]}
         </a>
 
         <ul className="hidden md:flex items-center gap-1">
@@ -65,7 +66,7 @@ export default function Navbar() {
                      border border-hairline text-ink hover:border-mint/50 hover:text-mint transition-colors"
         >
           <FileText size={14} />
-          Resume
+          {heroContent.buttons.resume}
         </a>
 
         <button
@@ -97,7 +98,7 @@ export default function Navbar() {
             className="px-3 py-2.5 rounded-lg text-sm text-mint flex items-center gap-1.5"
           >
             <FileText size={14} />
-            Resume
+            {heroContent.buttons.resume}
           </a>
         </div>
       )}

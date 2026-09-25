@@ -162,3 +162,47 @@ textarea:focus-visible {
     opacity: 0.09;
   }
 }
+
+/* ---------- Accessible, layout-stable hero typewriter ---------- */
+.typewriter {
+  display: grid;
+  width: 100%;
+  color: #fff;
+  font-size: clamp(0.95rem, 2vw, 1.2rem);
+  line-height: 1.5;
+  text-align: center;
+}
+
+.typewriter__reserve,
+.typewriter__visual {
+  grid-area: 1 / 1;
+  overflow-wrap: anywhere;
+}
+
+.typewriter__reserve {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.typewriter__visual {
+  align-self: start;
+}
+
+.typewriter__cursor {
+  display: inline-block;
+  height: 1.05em;
+  margin-left: 0.12em;
+  border-right: 1px solid #7dd3fc;
+  vertical-align: -0.12em;
+  animation: typewriter-cursor 850ms steps(2, jump-none) infinite;
+}
+
+@keyframes typewriter-cursor {
+  50% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .typewriter__cursor {
+    animation: none;
+  }
+}
