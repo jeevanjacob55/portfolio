@@ -20,9 +20,10 @@ export default function Hero() {
       </section>
 
       <section id="about" className="hero-about px-6 sm:px-10" aria-labelledby="about-heading">
-        <div className="max-w-5xl mx-auto grid md:grid-cols-[1.15fr_0.85fr] gap-12 md:gap-16 items-center">
+        <div className="max-w-5xl mx-auto">
+          <h2 id="about-heading" className="font-display font-semibold text-3xl text-ink text-center mb-14">About</h2>
+          <div className="grid md:grid-cols-[1.15fr_0.85fr] gap-12 md:gap-16 items-center">
           <div>
-            <h2 id="about-heading" className="font-display text-3xl text-ink mb-5">About</h2>
             <p className="text-muted text-base leading-relaxed mb-6">{heroContent.summary}</p>
             <div className="space-y-4 text-muted text-base leading-relaxed max-w-xl">
               {heroContent.bio.map((para, i) => (
@@ -73,6 +74,7 @@ export default function Hero() {
                 />
               )}
             </div>
+          </div>
           </div>
         </div>
       </section>

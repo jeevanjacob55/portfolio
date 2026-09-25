@@ -54,9 +54,10 @@ export default function Contact() {
 
   return (
     <section id="contact" className="py-24 px-6 sm:px-10">
-      <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-12">
+      <div className="max-w-5xl mx-auto">
+        <h2 className="font-display font-semibold text-3xl text-ink text-center mb-14">Get in touch</h2>
+        <div className="grid md:grid-cols-2 gap-12">
         <div>
-          <h2 className="font-display text-3xl text-ink mb-4">Get in touch</h2>
           <p className="text-muted leading-relaxed mb-8 max-w-sm">
             Open to full-stack and backend engineering roles, freelance work, and interesting
             problems. Reach out and I'll get back to you.
@@ -139,6 +140,7 @@ export default function Contact() {
             </p>
           )}
         </form>
+        </div>
       </div>
     </section>
   );
