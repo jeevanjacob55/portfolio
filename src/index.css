@@ -203,11 +203,11 @@ textarea:focus-visible {
 
 .hero-action {
   display: inline-flex;
-  min-width: 188px;
-  min-height: 54px;
+  min-width: 164px;
+  min-height: 46px;
   align-items: center;
   justify-content: center;
-  padding: 0.8rem 1.5rem;
+  padding: 0.65rem 1.2rem;
   border: 1px solid transparent;
   border-radius: 0.5rem;
   font-size: 0.95rem;
@@ -280,7 +280,7 @@ textarea:focus-visible {
   }
 
   .hero-action {
-    width: min(100%, 260px);
+    width: min(100%, 220px);
   }
 }
 

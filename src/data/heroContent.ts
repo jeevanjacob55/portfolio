@@ -11,6 +11,9 @@ export const heroContent = {
     "I'm an Aspiring Data Engineer",
     "I'm an AI & Computer Vision Enthusiast",
     "I'm a Robotics Developer",
+    "I'm a Curious Human Being",
+    "I Love Coding",
+    "I'm a Learner",
   ],
   buttons: {
     primary: "View My Work",
