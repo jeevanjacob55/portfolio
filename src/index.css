@@ -13,9 +13,27 @@ html {
 
 body {
   background-color: #030712;
-  color: #f8fafc;
+  color: #ffffff;
   font-family: "Inter", sans-serif;
   overflow-x: hidden;
+}
+
+/* Supporting copy uses text-muted throughout the page. */
+.text-muted {
+  color: #ffffff;
+}
+
+/* Keep links and text within buttons at their existing muted color. */
+a.text-muted,
+button.text-muted,
+button .text-muted {
+  color: #a1a1aa;
+}
+
+input[class~="placeholder:text-muted/60"]::placeholder,
+textarea[class~="placeholder:text-muted/60"]::placeholder {
+  color: #ffffff;
+  opacity: 1;
 }
 
 ::selection {
@@ -71,7 +89,7 @@ textarea:focus-visible {
   align-items: center;
   justify-content: center;
   background: radial-gradient(circle at 30% 20%, #1d4ed8 0%, #030712 70%);
-  color: rgba(248, 250, 252, 0.4);
+  color: #ffffff;
   font-family: "Fraunces", serif;
   font-size: 0.95rem;
   text-align: center;
