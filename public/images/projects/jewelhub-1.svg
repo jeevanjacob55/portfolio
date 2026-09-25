@@ -1,0 +1,16 @@
+<svg width="800" height="500" viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="g0" cx="30%" cy="20%" r="90%">
+      <stop offset="0%" stop-color="#047857" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#050A08" stop-opacity="1"/>
+    </radialGradient>
+    <pattern id="grid0" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#6EE7B7" stroke-opacity="0.06" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="800" height="500" fill="url(#g0)"/>
+  <rect width="800" height="500" fill="url(#grid0)"/>
+  <circle cx="680" cy="90" r="140" fill="#6EE7B7" opacity="0.08"/>
+  <text x="48" y="430" font-family="Georgia, serif" font-size="30" fill="#F8FAFC" opacity="0.85">JewelHub</text>
+  <text x="48" y="460" font-family="Arial, sans-serif" font-size="15" fill="#A1A1AA">Association dashboard — replace with real screenshot</text>
+</svg>
