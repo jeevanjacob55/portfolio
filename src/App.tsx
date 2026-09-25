@@ -13,15 +13,17 @@ export default function App() {
     <div className="relative isolate min-h-screen">
       <AnimatedBackground />
       <Navbar />
-      <main>
-        <Hero />
-        <Experience />
-        <Education />
-        <Projects />
-        <TechStack />
-        <Contact />
-      </main>
-      <Footer />
+      <div className="site-content">
+        <main>
+          <Hero />
+          <Experience />
+          <Education />
+          <Projects />
+          <TechStack />
+          <Contact />
+        </main>
+        <Footer />
+      </div>
     </div>
   );
 }
