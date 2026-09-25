@@ -1,6 +1,6 @@
 export const heroContent = {
   name: "Jeevan Jacob",
-  summary: "Building scalable software and shipping products that work in the real world.",
+  summary: "Hey! I am Jeevan, a full stack devloper and an aspiring data engineer",
   bio: [
     "As one of just 10 candidates selected for the Army AI Research & Incubation Centre internship, I worked as one of two developers building and shipping an AI-powered annotation platform used by Indian Army personnel for AI model training.",
     "My experience goes beyond writing code. I've worked on backend systems for large-scale image datasets, background processing, scalable data workflows, and hierarchical role-based access control. From  testing to debugging, and deployment, I've experienced what it takes to build software under real-world constraints.",
