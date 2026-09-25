@@ -39,7 +39,7 @@ export default function Navbar() {
         className="w-full max-w-3xl rounded-full border border-hairline bg-white/5 backdrop-blur-xl
                    px-4 sm:px-6 py-2.5 flex items-center justify-between shadow-[0_0_40px_-10px_rgba(13,148,136,0.35)]"
       >
-        <a href="#about" className="font-display text-lg tracking-tight text-ink shrink-0">
+        <a href="#home" className="font-display text-lg tracking-tight text-ink shrink-0">
           {heroContent.name.split(" ")[0]}
         </a>
 

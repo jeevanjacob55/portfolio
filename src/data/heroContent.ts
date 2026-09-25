@@ -8,15 +8,12 @@ export const heroContent = {
     "Previously, at TheXtruder, I developed a client-facing React website, working directly with clients to translate business requirements into responsive, functional web experiences.",
   ],
   roles: [
-    "I'm a Computer Vision Engineer",
-    "I'm an AI Developer",
-    "I'm a Data Engineering Enthusiast",
     "I'm a Software Developer",
-    "I'm a Curious Problem Solver",
+    "I'm an Aspiring Data Engineer",
+    "I'm an AI & Computer Vision Enthusiast",
+    "I'm a Robotics Developer",
   ],
   buttons: {
-    primary: "View My Work",
-    secondary: "Get In Touch",
     resume: "Resume",
   },
 };
