@@ -8,13 +8,12 @@ export const profile = {
     "My experience goes beyond writing code. I've worked on backend systems for large-scale image datasets, background processing, scalable data workflows, and hierarchical role-based access control. From understanding evolving requirements to testing, debugging, and deployment, I've experienced what it takes to build software under real-world constraints.",
     "Previously, at TheXtruder, I developed a client-facing React website, working directly with clients to translate business requirements into responsive, functional web experiences.",
   ],
-  // PLACEHOLDER — replace with your real portrait at /public/images/portrait.jpg
-  portrait: "/images/portrait.jpg",
+  portrait: `${import.meta.env.BASE_URL}images/portrait.jpg`,
   location: "Kerala, India",
   email: "your.email@example.com", // PLACEHOLDER
   social: {
     github: "https://github.com/your-username", // PLACEHOLDER
     linkedin: "https://linkedin.com/in/your-profile", // PLACEHOLDER
-    resume: "/resume.pdf", // PLACEHOLDER — drop your resume PDF into /public
+    resume: `${import.meta.env.BASE_URL}resume.pdf`,
   },
 };

@@ -10,7 +10,7 @@ import Footer from "./components/Footer";
 
 export default function App() {
   return (
-    <div className="relative min-h-screen">
+    <div className="relative isolate min-h-screen">
       <AnimatedBackground />
       <Navbar />
       <main>
