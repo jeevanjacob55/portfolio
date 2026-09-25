@@ -134,6 +134,10 @@ export default function Contact() {
             <p className="text-sm text-red-400">Something went wrong. Please try again or email directly.</p>
           )}
           {!FORM_ENDPOINT && (
+            <p className="text-xs text-muted/70">
+              This form opens your email client. Connect a form service such as Formspree with
+              VITE_FORM_ENDPOINT to send messages directly.
+            </p>
           )}
         </form>
         </div>

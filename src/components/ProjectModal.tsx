@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Github, ExternalLink } from "lucide-react";
 import { Project } from "../data/projects";
+import { showProjectImageCarousels } from "../data/projectDisplayConfig";
 import ImageCarousel from "./ImageCarousel";
 
 interface ProjectModalProps {
@@ -51,7 +52,9 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
               <X size={16} />
             </button>
 
-            <ImageCarousel images={project.images} alt={project.title} />
+            {showProjectImageCarousels && (
+              <ImageCarousel images={project.images} alt={project.title} />
+            )}
 
             <div className="p-6 sm:p-8">
               <p className="text-xs text-mint mb-2">{project.category}</p>

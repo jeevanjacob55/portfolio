@@ -16,7 +16,12 @@ const FRAGMENT_SHADER = `
   uniform vec2 u_resolution;
   uniform float u_time;
   uniform vec3 u_base;
-  uniform vec3 u_royal;
+  uniform vec3 u_secondary;
+  uniform vec3 u_undertone;
+  uniform vec3 u_ice;
+  uniform vec3 u_silverBlue;
+  uniform vec3 u_lavenderBlue;
+  uniform vec3 u_sapphire;
   varying vec2 v_uv;
 
   float hash(vec2 p) {
@@ -51,7 +56,7 @@ const FRAGMENT_SHADER = `
   void main() {
     vec2 uv = v_uv;
     vec2 p = (uv - 0.5) * vec2(u_resolution.x / u_resolution.y, 1.0);
-    const float LOOP_SECONDS = 180.0;
+    const float LOOP_SECONDS = 20.0;
     const float TAU = 6.28318530718;
     float phase = mod(u_time, LOOP_SECONDS) * (TAU / LOOP_SECONDS);
 
@@ -72,15 +77,27 @@ const FRAGMENT_SHADER = `
     );
     vec2 fluid = warped + (warpB - 0.5) * 1.15;
 
-    float field = fbm(fluid * 1.05 + driftA * 0.35);
-    float current = fbm(fluid * vec2(1.48, 1.12) + driftB * 0.42);
-    float detail = fbm(fluid * 1.92 + driftC * 0.3);
-    float flow = smoothstep(0.32, 0.72, field + (current - 0.5) * 0.22 + (detail - 0.5) * 0.1);
-    vec3 color = mix(u_base, u_royal, flow * 0.82);
+    float broadField = fbm(fluid * 0.62 + driftA * 0.3);
+    float silverField = fbm(fluid * vec2(0.9, 0.76) + driftB * 0.34);
+    float detailField = fbm(fluid * 1.36 + driftC * 0.28);
+    float cloudField = broadField + (silverField - 0.5) * 0.26 + (detailField - 0.5) * 0.12;
 
-    // Fine animated grain is deliberately low contrast and also loops with the field.
-    float grainFrame = mod(floor(u_time * 12.0), LOOP_SECONDS * 12.0);
-    float grain = (hash(gl_FragCoord.xy + vec2(grainFrame, grainFrame * 0.37)) - 0.5) * 0.012;
+    // Wide, warped noise fields make large feathered light formations without
+    // the circular boundaries of ordinary radial-gradient blobs.
+    vec3 color = mix(u_base, u_secondary, smoothstep(0.28, 0.76, cloudField) * 0.64);
+    color = mix(color, u_undertone, smoothstep(0.4, 0.72, silverField + (detailField - 0.5) * 0.12) * 0.3);
+
+    float iceCloud = smoothstep(0.62, 0.82, cloudField) * 0.16;
+    float silverCloud = smoothstep(0.56, 0.78, silverField + (broadField - 0.5) * 0.16) * 0.18;
+    float lavenderCloud = smoothstep(0.64, 0.82, detailField + (broadField - 0.5) * 0.18) * 0.08;
+    float sapphireCloud = smoothstep(0.42, 0.7, broadField + (detailField - 0.5) * 0.16) * 0.13;
+    color = mix(color, u_ice, iceCloud);
+    color = mix(color, u_silverBlue, silverCloud);
+    color = mix(color, u_lavenderBlue, lavenderCloud);
+    color = mix(color, u_sapphire, sapphireCloud);
+
+    // Static, fine grain stays stable between frames and avoids visible flicker.
+    float grain = (hash(gl_FragCoord.xy) - 0.5) * 0.01;
     color += grain;
 
     gl_FragColor = vec4(color, 1.0);
@@ -134,7 +151,12 @@ export default function AnimatedBackground() {
     let paletteLocations: (WebGLUniformLocation | null)[] = [];
     const paletteColors: PaletteColor[] = [
       readPaletteColor("--color-base", [3, 8, 23]),
+      readPaletteColor("--color-deep", [10, 22, 51]),
       readPaletteColor("--color-royal", [18, 54, 107]),
+      readPaletteColor("--mesh-ice", [224, 242, 254]),
+      readPaletteColor("--mesh-silver-blue", [147, 197, 253]),
+      readPaletteColor("--mesh-lavender-blue", [165, 180, 252]),
+      readPaletteColor("--mesh-sapphire", [59, 130, 246]),
     ];
     let frameId = 0;
     let elapsed = 0;
@@ -206,9 +228,15 @@ export default function AnimatedBackground() {
       positionLocation = context.getAttribLocation(nextProgram, "a_position");
       resolutionLocation = context.getUniformLocation(nextProgram, "u_resolution");
       timeLocation = context.getUniformLocation(nextProgram, "u_time");
-      paletteLocations = ["u_base", "u_royal"].map(
-        (name) => context.getUniformLocation(nextProgram, name)
-      );
+      paletteLocations = [
+        "u_base",
+        "u_secondary",
+        "u_undertone",
+        "u_ice",
+        "u_silverBlue",
+        "u_lavenderBlue",
+        "u_sapphire",
+      ].map((name) => context.getUniformLocation(nextProgram, name));
       context.enableVertexAttribArray(positionLocation);
       context.vertexAttribPointer(positionLocation, 2, context.FLOAT, false, 0, 0);
       context.disable(context.DEPTH_TEST);

@@ -12,6 +12,10 @@
   --color-ice: 125 211 252;
   --color-light: 249 250 251;
   --color-muted: 203 213 225;
+  --mesh-ice: 224 242 254;
+  --mesh-silver-blue: 147 197 253;
+  --mesh-lavender-blue: 165 180 252;
+  --mesh-sapphire: 59 130 246;
   --card-gradient-start: 37 99 235;
   --card-gradient-end: 255 255 255;
 }
@@ -75,7 +79,7 @@ textarea:focus-visible {
   pointer-events: none;
   overflow: hidden;
   isolation: isolate;
-  background: linear-gradient(135deg, rgb(var(--color-base)), rgb(var(--color-royal)));
+  background: linear-gradient(145deg, rgb(var(--color-base)) 0%, rgb(var(--color-deep)) 58%, rgb(var(--color-royal)) 100%);
 }
 
 .mesh-canvas {
@@ -93,7 +97,7 @@ textarea:focus-visible {
 }
 
 .gradient-card {
-  background: linear-gradient(135deg, rgb(var(--card-gradient-start)), rgb(var(--card-gradient-end)));
+  background: linear-gradient(145deg, rgb(var(--color-base)) 0%, rgb(var(--color-deep)) 58%, rgb(var(--color-royal)) 100%);
 }
 
 .navbar-shell {

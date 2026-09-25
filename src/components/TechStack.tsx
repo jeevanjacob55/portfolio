@@ -13,13 +13,13 @@ export default function TechStack() {
             <div key={group.category} className="gradient-card rounded-2xl border border-hairline p-5">
               <div className="flex items-center gap-2 mb-4">
                 <span className={`w-1.5 h-1.5 rounded-full ${dotColors[i % dotColors.length]}`} />
-                <h3 className="text-sm text-bg font-medium">{group.category}</h3>
+                <h3 className="text-sm text-ink font-medium">{group.category}</h3>
               </div>
               <div className="flex flex-wrap gap-2">
                 {group.items.map((item) => (
                   <span
                     key={item}
-                    className="text-xs px-2.5 py-1.5 rounded-full border border-emerald/20 text-emerald hover:border-teal/50 hover:text-teal transition-colors"
+                    className="text-xs px-2.5 py-1.5 rounded-full border border-hairline text-muted hover:border-mint/40 hover:text-mint transition-colors"
                   >
                     {item}
                   </span>
