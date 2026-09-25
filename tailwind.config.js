@@ -4,20 +4,21 @@ export default {
   theme: {
     extend: {
       colors: {
-        bg: "#051912",
-        emerald: "#082746",
-        teal: "#1D4ED8",
-        mint: "#7DD3FC",
-        ink: "#F9FAFB",
-        muted: "#CBD5E1",
-        card: "#082746",
+        bg: "rgb(var(--color-base) / <alpha-value>)",
+        emerald: "rgb(var(--color-deep) / <alpha-value>)",
+        teal: "rgb(var(--color-royal) / <alpha-value>)",
+        mint: "rgb(var(--color-ice) / <alpha-value>)",
+        ink: "rgb(var(--color-light) / <alpha-value>)",
+        muted: "rgb(var(--color-muted) / <alpha-value>)",
+        card: "rgb(var(--color-deep) / <alpha-value>)",
       },
       fontFamily: {
         display: ["'Fraunces'", "serif"],
+        heading: ["'Google Sans Flex'", "sans-serif"],
         body: ["'Inter'", "sans-serif"],
       },
       borderColor: {
-        hairline: "rgba(255,255,255,0.10)",
+        hairline: "rgb(var(--color-light) / 0.10)",
       },
     },
   },

@@ -55,7 +55,7 @@ export default function Contact() {
   return (
     <section id="contact" className="py-24 px-6 sm:px-10">
       <div className="max-w-5xl mx-auto">
-        <h2 className="font-display font-semibold text-3xl text-ink text-center mb-14">Get in touch</h2>
+        <h2 className="font-heading font-semibold text-3xl text-ink text-center mb-14">Get in touch</h2>
         <div className="grid md:grid-cols-2 gap-12">
         <div>
           <p className="text-muted leading-relaxed mb-8 max-w-sm">
@@ -121,7 +121,7 @@ export default function Contact() {
           <button
             type="submit"
             disabled={status === "loading"}
-            className="w-full inline-flex items-center justify-center gap-2 rounded-lg bg-mint text-[#051912] font-medium text-sm py-2.5 hover:bg-mint/90 transition-colors disabled:opacity-60"
+            className="w-full inline-flex items-center justify-center gap-2 rounded-lg bg-mint text-bg font-medium text-sm py-2.5 hover:bg-mint/90 transition-colors disabled:opacity-60"
           >
             <Send size={15} />
             {status === "loading" ? "Sending…" : "Send message"}

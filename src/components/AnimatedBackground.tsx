@@ -15,6 +15,11 @@ const FRAGMENT_SHADER = `
 
   uniform vec2 u_resolution;
   uniform float u_time;
+  uniform vec3 u_base;
+  uniform vec3 u_light;
+  uniform vec3 u_deep;
+  uniform vec3 u_royal;
+  uniform vec3 u_cyan;
   varying vec2 v_uv;
 
   float hash(vec2 p) {
@@ -73,18 +78,18 @@ const FRAGMENT_SHADER = `
     float cloudField = field + (current - 0.5) * 0.16;
     float whiteFlow = smoothstep(0.43, 0.69, cloudField);
     float skyFlow = smoothstep(0.34, 0.67, current + (detail - 0.5) * 0.12);
-    vec3 color = mix(vec3(0.0196, 0.0980, 0.0706), vec3(0.9765, 0.9804, 0.9843), whiteFlow * 0.78);
-    color = mix(color, vec3(0.0314, 0.1529, 0.2745), skyFlow * 0.42);
+    vec3 color = mix(u_base, u_light, whiteFlow * 0.78);
+    color = mix(color, u_deep, skyFlow * 0.42);
 
     float lowerFlow = smoothstep(-0.48, 0.2, -p.y + (warpA.x - 0.5) * 0.36);
     float edgeFlow = smoothstep(0.42, 1.02, length(p * vec2(0.68, 0.82)));
     float cyanField = detail + (field - 0.5) * 0.16;
     float cyanFlow = smoothstep(0.49, 0.7, cyanField) * (0.52 * lowerFlow + 0.34 * edgeFlow + 0.14);
-    color = mix(color, vec3(0.0314, 0.1529, 0.2745), cyanFlow * 0.48);
+    color = mix(color, u_royal, cyanFlow * 0.48);
 
     float electricField = current + (detail - 0.5) * 0.14;
     float electricFlow = smoothstep(0.56, 0.75, electricField) * smoothstep(0.34, 0.55, field);
-    color = mix(color, vec3(0.0314, 0.1529, 0.2745), electricFlow * 0.32);
+    color = mix(color, u_cyan, electricFlow * 0.32);
 
     // Keep a softly warped blue field behind the centered white hero text.
     float centerFlow = 1.0 - smoothstep(
@@ -93,11 +98,26 @@ const FRAGMENT_SHADER = `
       length((p + (warpA - 0.5) * 0.34) * vec2(0.58, 0.9))
     );
     centerFlow *= smoothstep(0.24, 0.54, current + (detail - 0.5) * 0.12);
-    color = mix(color, vec3(0.0314, 0.1529, 0.2745), centerFlow * 0.52);
+    color = mix(color, u_deep, centerFlow * 0.52);
 
     gl_FragColor = vec4(color, 1.0);
   }
 `;
+
+type PaletteColor = [number, number, number];
+
+function readPaletteColor(name: string, fallback: PaletteColor): PaletteColor {
+  const channels = getComputedStyle(document.documentElement)
+    .getPropertyValue(name)
+    .trim()
+    .split(/\s+/)
+    .map(Number);
+
+  if (channels.length !== 3 || channels.some((channel) => !Number.isFinite(channel))) {
+    return fallback;
+  }
+  return channels.map((channel) => channel / 255) as PaletteColor;
+}
 
 function compileShader(
   gl: WebGLRenderingContext,
@@ -128,6 +148,14 @@ export default function AnimatedBackground() {
     let positionLocation = -1;
     let resolutionLocation: WebGLUniformLocation | null = null;
     let timeLocation: WebGLUniformLocation | null = null;
+    let paletteLocations: (WebGLUniformLocation | null)[] = [];
+    const paletteColors: PaletteColor[] = [
+      readPaletteColor("--color-base", [5, 25, 18]),
+      readPaletteColor("--color-light", [249, 250, 251]),
+      readPaletteColor("--color-deep", [8, 39, 70]),
+      readPaletteColor("--color-royal", [29, 78, 216]),
+      readPaletteColor("--color-cyan", [14, 165, 233]),
+    ];
     let frameId = 0;
     let elapsed = 0;
     let previousFrame = 0;
@@ -198,6 +226,9 @@ export default function AnimatedBackground() {
       positionLocation = context.getAttribLocation(nextProgram, "a_position");
       resolutionLocation = context.getUniformLocation(nextProgram, "u_resolution");
       timeLocation = context.getUniformLocation(nextProgram, "u_time");
+      paletteLocations = ["u_base", "u_light", "u_deep", "u_royal", "u_cyan"].map(
+        (name) => context.getUniformLocation(nextProgram, name)
+      );
       context.enableVertexAttribArray(positionLocation);
       context.vertexAttribPointer(positionLocation, 2, context.FLOAT, false, 0, 0);
       context.disable(context.DEPTH_TEST);
@@ -212,6 +243,9 @@ export default function AnimatedBackground() {
       gl.useProgram(program);
       gl.uniform2f(resolutionLocation, canvas.width, canvas.height);
       gl.uniform1f(timeLocation, time);
+      paletteLocations.forEach((location, index) => {
+        if (location) gl?.uniform3fv(location, paletteColors[index]);
+      });
       gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
     };
 

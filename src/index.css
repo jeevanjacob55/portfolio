@@ -4,6 +4,14 @@
 
 :root {
   color-scheme: dark;
+  /* Edit these RGB channel values to retheme the complete portfolio. */
+  --color-base: 5 25 18;
+  --color-deep: 8 39 70;
+  --color-royal: 29 78 216;
+  --color-cyan: 14 165 233;
+  --color-ice: 125 211 252;
+  --color-light: 249 250 251;
+  --color-muted: 203 213 225;
 }
 
 html {
@@ -12,33 +20,33 @@ html {
 }
 
 body {
-  background-color: #030712;
-  color: #ffffff;
+  background-color: rgb(var(--color-base));
+  color: rgb(var(--color-light));
   font-family: "Inter", sans-serif;
   overflow-x: hidden;
 }
 
 /* Supporting copy uses text-muted throughout the page. */
 .text-muted {
-  color: #ffffff;
+  color: rgb(var(--color-light));
 }
 
 /* Keep links and text within buttons at their existing muted color. */
 a.text-muted,
 button.text-muted,
 button .text-muted {
-  color: #a1a1aa;
+  color: rgb(var(--color-muted));
 }
 
 input[class~="placeholder:text-muted/60"]::placeholder,
 textarea[class~="placeholder:text-muted/60"]::placeholder {
-  color: #ffffff;
+  color: rgb(var(--color-light));
   opacity: 1;
 }
 
 ::selection {
-  background: rgba(14, 165, 233, 0.28);
-  color: #f8fafc;
+  background: rgb(var(--color-cyan) / 0.28);
+  color: rgb(var(--color-light));
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -52,7 +60,7 @@ a:focus-visible,
 button:focus-visible,
 input:focus-visible,
 textarea:focus-visible {
-  outline: 2px solid #7dd3fc;
+  outline: 2px solid rgb(var(--color-ice));
   outline-offset: 3px;
   border-radius: 4px;
 }
@@ -65,9 +73,7 @@ textarea:focus-visible {
   pointer-events: none;
   overflow: hidden;
   isolation: isolate;
-  background: linear-gradient(145deg, #F9FAFB 0%, #082746 48%, #051912 100%);
-  /* background: linear-gradient(145deg, #0D261C 0%, #082746 48%, #051912 100%);
-} */
+  background: linear-gradient(145deg, rgb(var(--color-light)) 0%, rgb(var(--color-deep)) 48%, rgb(var(--color-base)) 100%);
 }
 
 .mesh-canvas {
@@ -84,14 +90,18 @@ textarea:focus-visible {
   z-index: 1;
 }
 
+.navbar-shell {
+  box-shadow: 0 0 40px -10px rgb(var(--color-royal) / 0.35);
+}
+
 /* Shown if profile.portrait fails to load (placeholder not yet replaced) */
 .portrait-fallback {
   aspect-ratio: 4 / 5;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: radial-gradient(circle at 30% 20%, #1d4ed8 0%, #030712 70%);
-  color: #ffffff;
+  background: radial-gradient(circle at 30% 20%, rgb(var(--color-royal)) 0%, rgb(var(--color-base)) 70%);
+  color: rgb(var(--color-light));
   font-family: "Fraunces", serif;
   font-size: 0.95rem;
   text-align: center;
@@ -102,7 +112,7 @@ textarea:focus-visible {
 .typewriter {
   display: grid;
   width: 100%;
-  color: #fff;
+  color: rgb(var(--color-light));
   font-size: clamp(0.95rem, 2vw, 1.2rem);
   line-height: 1.5;
   text-align: center;
@@ -127,7 +137,7 @@ textarea:focus-visible {
   display: inline-block;
   height: 1.05em;
   margin-left: 0.12em;
-  border-right: 1px solid #7dd3fc;
+  border-right: 1px solid rgb(var(--color-ice));
   vertical-align: -0.12em;
   animation: typewriter-cursor 850ms steps(2, jump-none) infinite;
 }
@@ -161,7 +171,7 @@ textarea:focus-visible {
 
 .hero-name {
   margin: 0 0 1rem;
-  color: #f8fafc;
+  color: rgb(var(--color-light));
   font-family: "Fraunces", serif;
   font-size: clamp(2.5rem, 8vw, 6.25rem);
   font-weight: 600;
@@ -186,14 +196,14 @@ textarea:focus-visible {
   justify-content: center;
   width: 40px;
   height: 40px;
-  color: rgba(248, 250, 252, 0.8);
+  color: rgb(var(--color-light) / 0.8);
   transform: translateX(-50%);
   animation: arrow-float 2.2s ease-in-out infinite;
   transition: color 180ms ease;
 }
 
 .hero-scroll-cue:hover {
-  color: #7dd3fc;
+  color: rgb(var(--color-ice));
 }
 
 .hero-about {
@@ -242,16 +252,16 @@ textarea:focus-visible {
   display: block;
   width: 11px;
   height: 11px;
-  border: 1px solid rgba(186, 230, 253, 0.9);
+  border: 1px solid rgb(var(--color-ice) / 0.9);
   border-radius: 50%;
-  background: rgba(14, 165, 233, 0.68);
-  box-shadow: 0 0 8px rgba(14, 165, 233, 0.48), 0 0 22px rgba(14, 165, 233, 0.2);
+  background: rgb(var(--color-cyan) / 0.68);
+  box-shadow: 0 0 8px rgb(var(--color-cyan) / 0.48), 0 0 22px rgb(var(--color-cyan) / 0.2);
   transform: translate(-50%, -50%) scale(1);
   transition: transform 220ms cubic-bezier(0.2, 0.75, 0.25, 1), background-color 220ms ease;
 }
 
 .cursor-follower.is-hovered .cursor-follower__orb {
-  background: rgba(125, 211, 252, 0.78);
+  background: rgb(var(--color-ice) / 0.78);
   transform: translate(-50%, -50%) scale(1.65);
 }
 
@@ -282,7 +292,7 @@ textarea:focus-visible {
   bottom: 0.4rem;
   left: calc(var(--experience-date-width) + var(--experience-gap) + var(--experience-marker-column) / 2);
   width: 1px;
-  background: rgba(148, 163, 184, 0.38);
+  background: rgb(var(--color-muted) / 0.38);
   content: "";
 }
 
@@ -299,7 +309,7 @@ textarea:focus-visible {
 }
 
 .experience-entry__main:focus-visible {
-  outline: 2px solid #7dd3fc;
+  outline: 2px solid rgb(var(--color-ice));
   outline-offset: 5px;
   border-radius: 0.25rem;
 }
@@ -316,7 +326,7 @@ textarea:focus-visible {
 .experience-entry__date {
   margin: 0;
   padding-top: 0.1rem;
-  color: #cbd5e1;
+  color: rgb(var(--color-muted));
   font-size: 0.9rem;
   line-height: 1.5;
   text-align: right;
@@ -327,17 +337,17 @@ textarea:focus-visible {
   width: 0.7rem;
   height: 0.7rem;
   margin: 0.45rem auto 0;
-  border: 2px solid #030712;
+  border: 2px solid rgb(var(--color-base));
   border-radius: 50%;
-  background: #7dd3fc;
-  box-shadow: 0 0 0 1px rgba(125, 211, 252, 0.75), 0 0 12px rgba(14, 165, 233, 0.28);
+  background: rgb(var(--color-ice));
+  box-shadow: 0 0 0 1px rgb(var(--color-ice) / 0.75), 0 0 12px rgb(var(--color-cyan) / 0.28);
   transition: background-color 220ms ease, box-shadow 220ms ease, transform 220ms ease;
 }
 
 .experience-entry:hover .experience-entry__marker,
 .experience-entry:focus-within .experience-entry__marker {
-  background: #0ea5e9;
-  box-shadow: 0 0 0 3px rgba(125, 211, 252, 0.16), 0 0 16px rgba(14, 165, 233, 0.48);
+  background: rgb(var(--color-cyan));
+  box-shadow: 0 0 0 3px rgb(var(--color-ice) / 0.16), 0 0 16px rgb(var(--color-cyan) / 0.48);
   transform: scale(1.12);
 }
 
@@ -354,7 +364,7 @@ textarea:focus-visible {
 
 .experience-entry__role {
   margin: 0;
-  color: #ffffff;
+  color: rgb(var(--color-light));
   font-size: 1.1rem;
   font-weight: 600;
   line-height: 1.4;
@@ -363,18 +373,18 @@ textarea:focus-visible {
 .experience-entry__chevron {
   flex: none;
   margin-top: 0.2rem;
-  color: #7dd3fc;
+  color: rgb(var(--color-ice));
   transition: color 260ms ease, transform 320ms cubic-bezier(0.2, 0.75, 0.25, 1);
 }
 
 .experience-entry__chevron.is-open {
-  color: #0ea5e9;
+  color: rgb(var(--color-cyan));
   transform: rotate(180deg);
 }
 
 .experience-entry__secondary {
   margin: 0;
-  color: #a1a1aa;
+  color: rgb(var(--color-muted));
   font-size: 0.9rem;
   line-height: 1.5;
 }
@@ -392,7 +402,7 @@ textarea:focus-visible {
 
 .experience-entry__location svg {
   flex: none;
-  color: #7dd3fc;
+  color: rgb(var(--color-ice));
 }
 
 .experience-entry__details {
@@ -416,7 +426,7 @@ textarea:focus-visible {
 .experience-entry__details-inner {
   min-height: 0;
   overflow: hidden;
-  color: #f1f5f9;
+  color: rgb(var(--color-light));
   font-size: 0.9rem;
   line-height: 1.7;
 }
@@ -433,7 +443,7 @@ textarea:focus-visible {
 }
 
 .experience-entry__list li::marker {
-  color: #7dd3fc;
+  color: rgb(var(--color-ice));
 }
 
 .experience-entry__stack {
@@ -445,9 +455,9 @@ textarea:focus-visible {
 
 .experience-entry__stack span {
   padding: 0.2rem 0.6rem;
-  border: 1px solid rgba(148, 163, 184, 0.25);
+  border: 1px solid rgb(var(--color-muted) / 0.25);
   border-radius: 999px;
-  color: #cbd5e1;
+  color: rgb(var(--color-muted));
   font-size: 0.72rem;
   line-height: 1.5;
 }

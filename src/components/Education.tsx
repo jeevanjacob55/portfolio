@@ -4,7 +4,7 @@ export default function Education() {
   return (
     <section id="education" className="py-4 px-6 sm:px-10">
       <div className="max-w-4xl mx-auto">
-        <h2 className="font-display font-semibold text-3xl text-ink text-center mb-14">Education</h2>
+        <h2 className="font-heading font-semibold text-3xl text-ink text-center mb-14">Education</h2>
 
         <div className="border-l border-hairline">
           {education.map((entry) => (

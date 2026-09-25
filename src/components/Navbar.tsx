@@ -36,8 +36,8 @@ export default function Navbar() {
   return (
     <header className="fixed top-4 left-0 right-0 z-50 flex justify-center px-4">
       <nav
-        className="w-full max-w-3xl rounded-full border border-hairline bg-white/5 backdrop-blur-xl
-                   px-4 sm:px-6 py-2.5 flex items-center justify-between shadow-[0_0_40px_-10px_rgba(29,78,216,0.35)]"
+        className="navbar-shell w-full max-w-3xl rounded-full border border-hairline bg-white/5 backdrop-blur-xl
+                   px-4 sm:px-6 py-2.5 flex items-center justify-between"
       >
         <a href="#home" className="font-display text-lg tracking-tight text-ink shrink-0">
           {heroContent.name.split(" ")[0]}
@@ -80,7 +80,7 @@ export default function Navbar() {
       </nav>
 
       {open && (
-        <div className="md:hidden absolute top-16 left-4 right-4 rounded-2xl border border-hairline bg-[#082746]/95 backdrop-blur-xl p-3 flex flex-col gap-1">
+        <div className="md:hidden absolute top-16 left-4 right-4 rounded-2xl border border-hairline bg-card/95 backdrop-blur-xl p-3 flex flex-col gap-1">
           {links.map((l) => (
             <a
               key={l.id}
