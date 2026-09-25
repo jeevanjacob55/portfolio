@@ -16,7 +16,6 @@ const FRAGMENT_SHADER = `
   uniform vec2 u_resolution;
   uniform float u_time;
   uniform vec3 u_base;
-  uniform vec3 u_light;
   uniform vec3 u_deep;
   uniform vec3 u_royal;
   uniform vec3 u_cyan;
@@ -78,7 +77,7 @@ const FRAGMENT_SHADER = `
     float cloudField = field + (current - 0.5) * 0.16;
     float whiteFlow = smoothstep(0.43, 0.69, cloudField);
     float skyFlow = smoothstep(0.34, 0.67, current + (detail - 0.5) * 0.12);
-    vec3 color = mix(u_base, u_light, whiteFlow * 0.78);
+    vec3 color = mix(u_base, u_deep, whiteFlow * 0.78);
     color = mix(color, u_deep, skyFlow * 0.42);
 
     float lowerFlow = smoothstep(-0.48, 0.2, -p.y + (warpA.x - 0.5) * 0.36);
@@ -150,11 +149,10 @@ export default function AnimatedBackground() {
     let timeLocation: WebGLUniformLocation | null = null;
     let paletteLocations: (WebGLUniformLocation | null)[] = [];
     const paletteColors: PaletteColor[] = [
-      readPaletteColor("--color-base", [5, 25, 18]),
-      readPaletteColor("--color-light", [249, 250, 251]),
-      readPaletteColor("--color-deep", [8, 39, 70]),
-      readPaletteColor("--color-royal", [29, 78, 216]),
-      readPaletteColor("--color-cyan", [14, 165, 233]),
+      readPaletteColor("--color-base", [3, 8, 23]),
+      readPaletteColor("--color-deep", [10, 22, 51]),
+      readPaletteColor("--color-royal", [18, 54, 107]),
+      readPaletteColor("--color-cyan", [30, 90, 168]),
     ];
     let frameId = 0;
     let elapsed = 0;
@@ -226,7 +224,7 @@ export default function AnimatedBackground() {
       positionLocation = context.getAttribLocation(nextProgram, "a_position");
       resolutionLocation = context.getUniformLocation(nextProgram, "u_resolution");
       timeLocation = context.getUniformLocation(nextProgram, "u_time");
-      paletteLocations = ["u_base", "u_light", "u_deep", "u_royal", "u_cyan"].map(
+      paletteLocations = ["u_base", "u_deep", "u_royal", "u_cyan"].map(
         (name) => context.getUniformLocation(nextProgram, name)
       );
       context.enableVertexAttribArray(positionLocation);

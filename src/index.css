@@ -5,10 +5,10 @@
 :root {
   color-scheme: dark;
   /* Edit these RGB channel values to retheme the complete portfolio. */
-  --color-base: 5 25 18;
-  --color-deep: 8 39 70;
-  --color-royal: 29 78 216;
-  --color-cyan: 14 165 233;
+  --color-base: 3 8 23;
+  --color-deep: 10 22 51;
+  --color-royal: 18 54 107;
+  --color-cyan: 30 90 168;
   --color-ice: 125 211 252;
   --color-light: 249 250 251;
   --color-muted: 203 213 225;
@@ -75,7 +75,7 @@ textarea:focus-visible {
   pointer-events: none;
   overflow: hidden;
   isolation: isolate;
-  background: linear-gradient(145deg, rgb(var(--color-light)) 0%, rgb(var(--color-deep)) 48%, rgb(var(--color-base)) 100%);
+  background: linear-gradient(145deg, rgb(var(--color-royal)) 0%, rgb(var(--color-deep)) 48%, rgb(var(--color-base)) 100%);
 }
 
 .mesh-canvas {
@@ -252,8 +252,8 @@ textarea:focus-visible {
 
 .cursor-follower__orb {
   display: block;
-  width: 11px;
-  height: 11px;
+  width: 14px;
+  height: 14px;
   border: 1px solid rgb(var(--cursor-outer));
   border-radius: 50%;
   background: rgb(var(--cursor-inner));
