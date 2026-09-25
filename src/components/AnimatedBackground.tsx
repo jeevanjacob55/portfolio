@@ -16,9 +16,7 @@ const FRAGMENT_SHADER = `
   uniform vec2 u_resolution;
   uniform float u_time;
   uniform vec3 u_base;
-  uniform vec3 u_deep;
   uniform vec3 u_royal;
-  uniform vec3 u_cyan;
   varying vec2 v_uv;
 
   float hash(vec2 p) {
@@ -53,51 +51,37 @@ const FRAGMENT_SHADER = `
   void main() {
     vec2 uv = v_uv;
     vec2 p = (uv - 0.5) * vec2(u_resolution.x / u_resolution.y, 1.0);
-    float t = u_time;
+    const float LOOP_SECONDS = 180.0;
+    const float TAU = 6.28318530718;
+    float phase = mod(u_time, LOOP_SECONDS) * (TAU / LOOP_SECONDS);
 
-    // Two animated, differently directed warp fields bend the boundaries
-    // into long, interconnected currents instead of circular color spots.
+    // Periodic domain warps create fluid currents and return to their exact
+    // starting coordinates every three minutes for a seamless loop.
+    vec2 driftA = vec2(cos(phase), sin(phase)) * 0.22;
+    vec2 driftB = vec2(cos(phase + 1.7), sin(phase + 1.7)) * 0.19;
     vec2 warpA = vec2(
-      fbm(p * 0.92 + vec2(t * 0.075, -t * 0.048)),
-      fbm(p * 0.92 + vec2(5.2 - t * 0.052, 2.7 + t * 0.064))
+      fbm(p * 0.92 + driftA),
+      fbm(p * 0.92 + vec2(5.2, 2.7) + driftB)
     );
     vec2 warped = p * 1.12 + (warpA - 0.5) * 1.85;
+    vec2 driftC = vec2(cos(phase * 2.0 + 0.8), sin(phase * 2.0 + 0.8)) * 0.14;
+    vec2 driftD = vec2(cos(phase * 2.0 + 2.6), sin(phase * 2.0 + 2.6)) * 0.12;
     vec2 warpB = vec2(
-      fbm(warped * 1.08 + vec2(1.7 + t * 0.043, 8.1 - t * 0.025)),
-      fbm(warped * 1.08 + vec2(6.4 - t * 0.031, 3.3 + t * 0.05))
+      fbm(warped * 1.08 + vec2(1.7, 8.1) + driftC),
+      fbm(warped * 1.08 + vec2(6.4, 3.3) + driftD)
     );
     vec2 fluid = warped + (warpB - 0.5) * 1.15;
 
-    float field = fbm(fluid * 1.05 + vec2(t * 0.028, -t * 0.021));
-    float current = fbm(fluid * vec2(1.48, 1.12) + vec2(-t * 0.038, t * 0.031));
-    float detail = fbm(fluid * 1.92 + vec2(t * 0.022, t * 0.029));
+    float field = fbm(fluid * 1.05 + driftA * 0.35);
+    float current = fbm(fluid * vec2(1.48, 1.12) + driftB * 0.42);
+    float detail = fbm(fluid * 1.92 + driftC * 0.3);
+    float flow = smoothstep(0.32, 0.72, field + (current - 0.5) * 0.22 + (detail - 0.5) * 0.1);
+    vec3 color = mix(u_base, u_royal, flow * 0.82);
 
-    // Broad, overlapping noise fields create soft cloud banks instead of
-    // isolated spots. The wide thresholds keep every color transition feathered.
-    float cloudField = field + (current - 0.5) * 0.16;
-    float whiteFlow = smoothstep(0.43, 0.69, cloudField);
-    float skyFlow = smoothstep(0.34, 0.67, current + (detail - 0.5) * 0.12);
-    vec3 color = mix(u_base, u_deep, whiteFlow * 0.78);
-    color = mix(color, u_deep, skyFlow * 0.42);
-
-    float lowerFlow = smoothstep(-0.48, 0.2, -p.y + (warpA.x - 0.5) * 0.36);
-    float edgeFlow = smoothstep(0.42, 1.02, length(p * vec2(0.68, 0.82)));
-    float cyanField = detail + (field - 0.5) * 0.16;
-    float cyanFlow = smoothstep(0.49, 0.7, cyanField) * (0.52 * lowerFlow + 0.34 * edgeFlow + 0.14);
-    color = mix(color, u_royal, cyanFlow * 0.48);
-
-    float electricField = current + (detail - 0.5) * 0.14;
-    float electricFlow = smoothstep(0.56, 0.75, electricField) * smoothstep(0.34, 0.55, field);
-    color = mix(color, u_cyan, electricFlow * 0.32);
-
-    // Keep a softly warped blue field behind the centered white hero text.
-    float centerFlow = 1.0 - smoothstep(
-      0.18,
-      0.95,
-      length((p + (warpA - 0.5) * 0.34) * vec2(0.58, 0.9))
-    );
-    centerFlow *= smoothstep(0.24, 0.54, current + (detail - 0.5) * 0.12);
-    color = mix(color, u_deep, centerFlow * 0.52);
+    // Fine animated grain is deliberately low contrast and also loops with the field.
+    float grainFrame = mod(floor(u_time * 12.0), LOOP_SECONDS * 12.0);
+    float grain = (hash(gl_FragCoord.xy + vec2(grainFrame, grainFrame * 0.37)) - 0.5) * 0.012;
+    color += grain;
 
     gl_FragColor = vec4(color, 1.0);
   }
@@ -150,9 +134,7 @@ export default function AnimatedBackground() {
     let paletteLocations: (WebGLUniformLocation | null)[] = [];
     const paletteColors: PaletteColor[] = [
       readPaletteColor("--color-base", [3, 8, 23]),
-      readPaletteColor("--color-deep", [10, 22, 51]),
       readPaletteColor("--color-royal", [18, 54, 107]),
-      readPaletteColor("--color-cyan", [30, 90, 168]),
     ];
     let frameId = 0;
     let elapsed = 0;
@@ -224,7 +206,7 @@ export default function AnimatedBackground() {
       positionLocation = context.getAttribLocation(nextProgram, "a_position");
       resolutionLocation = context.getUniformLocation(nextProgram, "u_resolution");
       timeLocation = context.getUniformLocation(nextProgram, "u_time");
-      paletteLocations = ["u_base", "u_deep", "u_royal", "u_cyan"].map(
+      paletteLocations = ["u_base", "u_royal"].map(
         (name) => context.getUniformLocation(nextProgram, name)
       );
       context.enableVertexAttribArray(positionLocation);
