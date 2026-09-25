@@ -13,6 +13,8 @@ export const heroContent = {
     "I'm a Robotics Developer",
   ],
   buttons: {
+    primary: "View My Work",
+    secondary: "Get In Touch",
     resume: "Resume",
   },
 };

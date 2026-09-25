@@ -193,6 +193,52 @@ textarea:focus-visible {
   letter-spacing: 0.01em;
 }
 
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: clamp(2rem, 5vh, 3rem);
+}
+
+.hero-action {
+  display: inline-flex;
+  min-width: 188px;
+  min-height: 54px;
+  align-items: center;
+  justify-content: center;
+  padding: 0.8rem 1.5rem;
+  border: 1px solid transparent;
+  border-radius: 0.5rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease, transform 180ms ease;
+}
+
+.hero-action:hover {
+  transform: translateY(-2px);
+}
+
+.hero-action--primary {
+  background: rgb(var(--card-gradient-end));
+  color: rgb(var(--color-base));
+}
+
+.hero-action--primary:hover {
+  background: rgb(var(--card-gradient-end) / 0.9);
+}
+
+.hero-action--secondary {
+  border-color: rgb(var(--card-gradient-start) / 0.75);
+  background: rgb(var(--card-gradient-start) / 0.08);
+  color: rgb(var(--color-light));
+}
+
+.hero-action--secondary:hover {
+  background: rgb(var(--card-gradient-start) / 0.2);
+}
+
 .hero-scroll-cue {
   position: absolute;
   bottom: 34px;
@@ -231,6 +277,10 @@ textarea:focus-visible {
 
   .hero-landing {
     padding-inline: 1rem;
+  }
+
+  .hero-action {
+    width: min(100%, 260px);
   }
 }
 

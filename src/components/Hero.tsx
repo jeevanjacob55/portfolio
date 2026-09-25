@@ -13,6 +13,14 @@ export default function Hero() {
         <div className="hero-landing__center">
           <h1 id="hero-name" className="hero-name">{heroContent.name}</h1>
           <TypewriterText />
+          <div className="hero-actions">
+            <a className="hero-action hero-action--primary" href="#projects">
+              {heroContent.buttons.primary}
+            </a>
+            <a className="hero-action hero-action--secondary" href="#contact">
+              {heroContent.buttons.secondary}
+            </a>
+          </div>
         </div>
         <a className="hero-scroll-cue" href="#about" aria-label="Scroll to About section">
           <ArrowDown size={19} strokeWidth={1.6} aria-hidden="true" />
