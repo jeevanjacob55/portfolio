@@ -7,10 +7,9 @@ export const heroContent = {
     "Currently loving life in Thrissur. When I'm not building Softwares, you'll probably find me chasing trails, lifting weights, exploring a new corner of the city, getting lost in a good book, or watching a movie I'll inevitably overanalyze afterward.",
   ],
   roles: [
-    "I'm a Software Developer",
+    "I'm a FullStack Developer",
     "I'm an Aspiring Data Engineer",
     "I'm an AI & Computer Vision Enthusiast",
-    "I'm a Robotics Developer",
     "I'm a Curious Human Being",
     "I Love Coding",
     "I'm a Learner",
