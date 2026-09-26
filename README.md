@@ -2,7 +2,7 @@
 
 A single-page developer portfolio built with React, Vite, TypeScript, and Tailwind CSS —
 dark emerald/teal theme, animated mesh-gradient background, expandable experience
-timeline, filterable project grid with auto-rotating image carousels, and a contact form.
+timeline, filterable project grid with auto-rotating image carousels, and contact details.
 
 ## Before you deploy — replace the placeholders
 
@@ -61,29 +61,6 @@ npm run deploy
 This uses `gh-pages` to push `dist/` to a `gh-pages` branch — use this if you'd rather
 not use the Actions workflow. If you do, set Pages' source to the `gh-pages` branch
 instead of GitHub Actions.
-
-## Contact form and SMTP
-
-The contact form posts to `/api/contact`, a Vercel serverless function that sends
-messages using SMTP. GitHub Pages only serves static files and cannot run this function;
-deploy the project to Vercel for the form to send mail. Vercel detects the Vite app and
-the `api/contact.ts` function automatically.
-
-In Vercel project settings, add these environment variables for Production (and Preview
-if desired):
-
-```
-SMTP_HOST=your SMTP server host
-SMTP_PORT=465
-SMTP_USER=your SMTP login/email
-SMTP_PASS=your SMTP password or app password
-CONTACT_EMAIL=jeevanjacobwork@gmail.com
-```
-
-Use port `465` for implicit TLS or `587` for STARTTLS. Keep these values in Vercel's
-server environment only; never add SMTP credentials to a `VITE_` variable or commit them
-to the repository. Redeploy after adding or changing them. `VITE_FORM_ENDPOINT` can be
-set at build time if you need the frontend to post to a separately hosted API URL.
 
 ## Project structure
 
