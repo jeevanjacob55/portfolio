@@ -28,7 +28,7 @@ export default function ProjectCard({ project, onOpen }: ProjectCardProps) {
           onClick={onOpen}
           className="mt-auto text-sm text-mint hover:text-ink transition-colors self-start"
         >
-          View case study
+          View more
         </button>
       </div>
     </div>
