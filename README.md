@@ -62,19 +62,28 @@ This uses `gh-pages` to push `dist/` to a `gh-pages` branch — use this if you'
 not use the Actions workflow. If you do, set Pages' source to the `gh-pages` branch
 instead of GitHub Actions.
 
-## Contact form
+## Contact form and SMTP
 
-The contact form works without a backend: on submit it validates the fields and opens
-the visitor's email client with the message pre-filled (GitHub Pages can't run a server
-to receive form posts). To send messages directly instead, sign up for a static-form
-service (e.g. [Formspree](https://formspree.io)) and set its endpoint in a `.env` file:
+The contact form posts to `/api/contact`, a Vercel serverless function that sends
+messages using SMTP. GitHub Pages only serves static files and cannot run this function;
+deploy the project to Vercel for the form to send mail. Vercel detects the Vite app and
+the `api/contact.ts` function automatically.
+
+In Vercel project settings, add these environment variables for Production (and Preview
+if desired):
 
 ```
-VITE_FORM_ENDPOINT=https://formspree.io/f/your-id
+SMTP_HOST=your SMTP server host
+SMTP_PORT=465
+SMTP_USER=your SMTP login/email
+SMTP_PASS=your SMTP password or app password
+CONTACT_EMAIL=jeevanjacobwork@gmail.com
 ```
 
-Then also add `VITE_FORM_ENDPOINT` as a repository secret/variable and pass it into the
-build step of the Actions workflow if you want it set in production.
+Use port `465` for implicit TLS or `587` for STARTTLS. Keep these values in Vercel's
+server environment only; never add SMTP credentials to a `VITE_` variable or commit them
+to the repository. Redeploy after adding or changing them. `VITE_FORM_ENDPOINT` can be
+set at build time if you need the frontend to post to a separately hosted API URL.
 
 ## Project structure
 

@@ -2,11 +2,6 @@ import { FormEvent, useState } from "react";
 import { Github, Linkedin, Mail, MapPin, Send } from "lucide-react";
 import { profile } from "../data/profile";
 
-// GitHub Pages is static hosting with no backend. Set VITE_FORM_ENDPOINT
-// (e.g. a Formspree/Getform endpoint) in a .env file to submit messages
-// for real. Without it, the form falls back to opening the visitor's
-// email client with the message pre-filled — it never claims to have
-// sent something it didn't.
 const FORM_ENDPOINT = import.meta.env.VITE_FORM_ENDPOINT as string | undefined;
 
 type Status = "idle" | "loading" | "success" | "error";
@@ -29,17 +24,9 @@ export default function Contact() {
     e.preventDefault();
     if (!validate()) return;
 
-    if (!FORM_ENDPOINT) {
-      // No backend configured — be honest about it and hand off to email.
-      window.location.href = `mailto:${profile.email}?subject=${encodeURIComponent(
-        `Message from ${values.name}`
-      )}&body=${encodeURIComponent(values.message)}`;
-      return;
-    }
-
     setStatus("loading");
     try {
-      const res = await fetch(FORM_ENDPOINT, {
+      const res = await fetch(FORM_ENDPOINT || "/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify(values),
@@ -86,7 +73,7 @@ export default function Contact() {
               id="name"
               value={values.name}
               onChange={(e) => setValues((v) => ({ ...v, name: e.target.value }))}
-              className="w-full rounded-lg bg-white/5 border border-hairline px-3.5 py-2.5 text-sm text-ink placeholder:text-muted/60 focus:border-mint/50 outline-none transition-colors"
+              className="w-full rounded-lg bg-white/5 border border-hairline px-3.5 py-2.5 text-sm text-ink placeholder:text-muted/40 focus:border-mint/50 outline-none transition-colors"
               placeholder="Your name"
             />
             {errors.name && <p className="text-xs text-red-400 mt-1">{errors.name}</p>}
@@ -99,7 +86,7 @@ export default function Contact() {
               type="email"
               value={values.email}
               onChange={(e) => setValues((v) => ({ ...v, email: e.target.value }))}
-              className="w-full rounded-lg bg-white/5 border border-hairline px-3.5 py-2.5 text-sm text-ink placeholder:text-muted/60 focus:border-mint/50 outline-none transition-colors"
+              className="w-full rounded-lg bg-white/5 border border-hairline px-3.5 py-2.5 text-sm text-ink placeholder:text-muted/40 focus:border-mint/50 outline-none transition-colors"
               placeholder="you@example.com"
             />
             {errors.email && <p className="text-xs text-red-400 mt-1">{errors.email}</p>}
@@ -112,7 +99,7 @@ export default function Contact() {
               rows={4}
               value={values.message}
               onChange={(e) => setValues((v) => ({ ...v, message: e.target.value }))}
-              className="w-full rounded-lg bg-white/5 border border-hairline px-3.5 py-2.5 text-sm text-ink placeholder:text-muted/60 focus:border-mint/50 outline-none transition-colors resize-none"
+              className="w-full rounded-lg bg-white/5 border border-hairline px-3.5 py-2.5 text-sm text-ink placeholder:text-muted/40 focus:border-mint/50 outline-none transition-colors resize-none"
               placeholder="What would you like to say?"
             />
             {errors.message && <p className="text-xs text-red-400 mt-1">{errors.message}</p>}
@@ -132,12 +119,6 @@ export default function Contact() {
           )}
           {status === "error" && (
             <p className="text-sm text-red-400">Something went wrong. Please try again or email directly.</p>
-          )}
-          {!FORM_ENDPOINT && (
-            <p className="text-xs text-muted/70">
-              This form opens your email client. Connect a form service such as Formspree with
-              VITE_FORM_ENDPOINT to send messages directly.
-            </p>
           )}
         </form>
         </div>
