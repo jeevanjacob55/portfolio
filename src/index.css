@@ -310,8 +310,8 @@ textarea:focus-visible {
 
 .cursor-follower__orb {
   display: block;
-  width: 8px;
-  height: 8px;
+  width: 9.6px;
+  height: 9.6px;
   border: 0;
   border-radius: 50%;
   background: #fff;
