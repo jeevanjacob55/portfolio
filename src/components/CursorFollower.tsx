@@ -102,14 +102,12 @@ export default function CursorFollower() {
       frameId = 0;
     };
 
-    document.documentElement.classList.add("custom-cursor-enabled");
     document.addEventListener("pointermove", handlePointerMove);
     document.addEventListener("pointerover", handlePointerOver);
     document.addEventListener("pointerout", handlePointerOut);
     window.addEventListener("blur", handleWindowBlur);
 
     return () => {
-      document.documentElement.classList.remove("custom-cursor-enabled");
       document.removeEventListener("pointermove", handlePointerMove);
       document.removeEventListener("pointerover", handlePointerOver);
       document.removeEventListener("pointerout", handlePointerOut);

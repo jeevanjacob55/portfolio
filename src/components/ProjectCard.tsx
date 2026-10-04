@@ -1,6 +1,7 @@
 import { Project } from "../data/projects";
 import { showProjectImageCarousels } from "../data/projectDisplayConfig";
 import ImageCarousel from "./ImageCarousel";
+import { ArrowUpRight } from "lucide-react";
 
 interface ProjectCardProps {
   project: Project;
@@ -9,7 +10,7 @@ interface ProjectCardProps {
 
 export default function ProjectCard({ project, onOpen }: ProjectCardProps) {
   return (
-    <div className="gradient-card cursor-hover-target flex flex-col h-full rounded-2xl border border-hairline overflow-hidden hover:border-mint/30 transition-colors">
+    <div className="gradient-card project-card cursor-hover-target flex flex-col h-full rounded-2xl border border-hairline overflow-hidden">
       {showProjectImageCarousels && <ImageCarousel images={project.images} alt={project.title} />}
 
       <div className="flex flex-col flex-1 p-5">
@@ -26,9 +27,9 @@ export default function ProjectCard({ project, onOpen }: ProjectCardProps) {
 
         <button
           onClick={onOpen}
-          className="mt-auto text-sm text-mint hover:text-ink transition-colors self-start"
+          className="project-card__action mt-auto text-sm self-start"
         >
-          View more
+          View details <ArrowUpRight size={16} aria-hidden="true" />
         </button>
       </div>
     </div>

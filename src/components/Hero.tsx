@@ -3,6 +3,7 @@ import { ArrowDown, Github, Linkedin, Mail } from "lucide-react";
 import { profile } from "../data/profile";
 import { heroContent } from "../data/heroContent";
 import TypewriterText from "./TypewriterText";
+import SectionHeading from "./SectionHeading";
 
 export default function Hero() {
   const [portraitFailed, setPortraitFailed] = useState(false);
@@ -29,7 +30,7 @@ export default function Hero() {
 
       <section id="about" className="hero-about px-6 sm:px-10" aria-labelledby="about-heading">
         <div className="max-w-5xl mx-auto">
-          <h2 id="about-heading" className="font-heading font-semibold text-3xl text-ink text-center mb-14">About</h2>
+          <SectionHeading index="01" title="About" id="about-heading" />
           <div className="grid md:grid-cols-[1.15fr_0.85fr] gap-12 md:gap-16 items-center">
           <div>
             <p className="text-muted text-base leading-relaxed mb-6">{heroContent.summary}</p>
@@ -69,8 +70,7 @@ export default function Hero() {
           </div>
 
           <div className="relative mx-auto md:mx-0 w-full max-w-sm">
-            <div className="absolute -inset-4 rounded-[2rem] bg-gradient-to-br from-emerald/30 via-teal/10 to-transparent blur-2xl" />
-            <div className="relative rounded-[1.75rem] overflow-hidden border border-hairline group">
+            <div className="relative rounded-[14px] overflow-hidden border border-hairline group">
               {portraitFailed ? (
                 <div className="portrait-fallback">Add your portrait at /public/images/portrait.jpg</div>
               ) : (

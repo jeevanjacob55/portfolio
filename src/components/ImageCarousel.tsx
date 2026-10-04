@@ -1,7 +1,5 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-
-const ROTATE_MS = 3500;
 
 interface ImageCarouselProps {
   images: string[];
@@ -10,34 +8,6 @@ interface ImageCarouselProps {
 
 export default function ImageCarousel({ images, alt }: ImageCarouselProps) {
   const [index, setIndex] = useState(0);
-  const [paused, setPaused] = useState(false);
-  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const prefersReducedMotion = useRef(
-    typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches
-  );
-
-  const clearTimer = useCallback(() => {
-    if (timerRef.current) {
-      clearInterval(timerRef.current);
-      timerRef.current = null;
-    }
-  }, []);
-
-  useEffect(() => {
-    if (images.length <= 1 || paused || prefersReducedMotion.current) {
-      clearTimer();
-      return;
-    }
-    timerRef.current = setInterval(() => {
-      setIndex((i) => (i + 1) % images.length);
-    }, ROTATE_MS);
-
-    return clearTimer;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [paused, images.length]);
-
-  // Ensure the timer is always cleaned up on unmount
-  useEffect(() => () => clearTimer(), [clearTimer]);
 
   if (images.length === 0) return null;
 
@@ -45,7 +15,13 @@ export default function ImageCarousel({ images, alt }: ImageCarouselProps) {
   if (images.length === 1) {
     return (
       <div className="relative w-full aspect-[16/10] overflow-hidden rounded-t-2xl bg-card">
-        <img src={images[0]} alt={alt} className="w-full h-full object-cover" loading="lazy" />
+        <img
+          src={images[0]}
+          alt={alt}
+          className="project-image w-full h-full object-cover"
+          loading="lazy"
+          onLoad={(event) => event.currentTarget.classList.add("is-loaded")}
+        />
       </div>
     );
   }
@@ -53,22 +29,17 @@ export default function ImageCarousel({ images, alt }: ImageCarouselProps) {
   const goTo = (i: number) => setIndex((i + images.length) % images.length);
 
   return (
-    <div
-      className="relative w-full aspect-[16/10] overflow-hidden rounded-t-2xl bg-card group/carousel"
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
-      onFocus={() => setPaused(true)}
-      onBlur={() => setPaused(false)}
-    >
+    <div className="relative w-full aspect-[16/10] overflow-hidden rounded-t-2xl bg-card group/carousel">
       {images.map((src, i) => (
         <img
           key={src}
           src={src}
           alt={`${alt} — screenshot ${i + 1} of ${images.length}`}
           loading="lazy"
-          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ease-in-out ${
+          className={`project-image absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ease-in-out ${
             i === index ? "opacity-100" : "opacity-0"
           }`}
+          onLoad={(event) => event.currentTarget.classList.add("is-loaded")}
         />
       ))}
 
@@ -79,7 +50,7 @@ export default function ImageCarousel({ images, alt }: ImageCarouselProps) {
           e.stopPropagation();
           goTo(index - 1);
         }}
-        className="absolute left-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-black/40 backdrop-blur
+        className="absolute left-2 top-1/2 -translate-y-1/2 w-9 h-9 rounded-lg bg-black/40 backdrop-blur
                    flex items-center justify-center text-ink opacity-0 group-hover/carousel:opacity-100
                    focus-visible:opacity-100 transition-opacity"
       >
@@ -92,7 +63,7 @@ export default function ImageCarousel({ images, alt }: ImageCarouselProps) {
           e.stopPropagation();
           goTo(index + 1);
         }}
-        className="absolute right-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-black/40 backdrop-blur
+        className="absolute right-2 top-1/2 -translate-y-1/2 w-9 h-9 rounded-lg bg-black/40 backdrop-blur
                    flex items-center justify-center text-ink opacity-0 group-hover/carousel:opacity-100
                    focus-visible:opacity-100 transition-opacity"
       >

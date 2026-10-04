@@ -1,12 +1,13 @@
 import { skills } from "../data/skills";
+import SectionHeading from "./SectionHeading";
 
-const dotColors = ["bg-mint", "bg-teal", "bg-emerald", "bg-mint"];
+const dotColors = ["bg-mint", "bg-white/50", "bg-white/30", "bg-mint"];
 
 export default function TechStack() {
   return (
     <section id="stack" className="py-24 px-6 sm:px-10">
       <div className="max-w-5xl mx-auto">
-        <h2 className="font-heading font-semibold text-3xl text-ink text-center mb-14">Technical Stack</h2>
+        <SectionHeading index="05" title="Technical stack" />
 
         <div className="grid sm:grid-cols-2 gap-5">
           {skills.map((group, i) => (

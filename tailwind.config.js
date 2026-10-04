@@ -13,8 +13,8 @@ export default {
         card: "rgb(var(--color-deep) / <alpha-value>)",
       },
       fontFamily: {
-        display: ["'Fraunces'", "serif"],
-        heading: ["'Google Sans Flex'", "sans-serif"],
+        display: ["'Inter'", "sans-serif"],
+        heading: ["'Inter'", "sans-serif"],
         body: ["'Inter'", "sans-serif"],
       },
       borderColor: {

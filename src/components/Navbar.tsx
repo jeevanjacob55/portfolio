@@ -14,6 +14,14 @@ const links = [
 export default function Navbar() {
   const [active, setActive] = useState("about");
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const updateScrollState = () => setScrolled(window.scrollY > 12);
+    updateScrollState();
+    window.addEventListener("scroll", updateScrollState, { passive: true });
+    return () => window.removeEventListener("scroll", updateScrollState);
+  }, []);
 
   useEffect(() => {
     const sections = links
@@ -34,24 +42,21 @@ export default function Navbar() {
   }, []);
 
   return (
-    <header className="fixed top-4 left-0 right-0 z-50 flex justify-center px-4">
-      <nav
-        className="navbar-shell w-full max-w-3xl rounded-full border border-hairline bg-white/5 backdrop-blur-xl
-                   px-4 sm:px-6 py-2.5 flex items-center justify-between"
-      >
-        <a href="#home" className="font-display text-lg tracking-tight text-ink shrink-0">
+    <header className={`site-header${scrolled ? " is-scrolled" : ""}`}>
+      <nav className="navbar-shell">
+        <a href="#home" className="navbar-logo">
           {heroContent.name.split(" ")[0]}
         </a>
 
-        <ul className="hidden md:flex items-center gap-1">
+        <ul className="navbar-links hidden md:flex">
           {links.map((l) => (
             <li key={l.id}>
               <a
                 href={`#${l.id}`}
-                className={`px-3 py-1.5 rounded-full text-sm transition-colors duration-200 ${
+                className={`navbar-link ${
                   active === l.id
-                    ? "text-ink bg-white/10"
-                    : "text-muted hover:text-ink hover:bg-white/5"
+                    ? "is-active"
+                    : ""
                 }`}
               >
                 {l.label}
@@ -62,46 +67,44 @@ export default function Navbar() {
 
         <a
           href={profile.social.resume}
-          className="hidden md:inline-flex items-center gap-1.5 text-sm px-3.5 py-1.5 rounded-full
-                     border border-hairline text-ink hover:border-mint/50 hover:text-mint transition-colors"
+          className="navbar-resume hidden md:inline-flex items-center gap-1.5"
         >
           <FileText size={14} />
           {heroContent.buttons.resume}
         </a>
 
         <button
-          className="md:hidden text-ink"
+          className="navbar-menu-button md:hidden"
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
+          aria-controls="mobile-menu"
           onClick={() => setOpen((v) => !v)}
         >
           {open ? <X size={20} /> : <Menu size={20} />}
         </button>
       </nav>
 
-      {open && (
-        <div className="md:hidden absolute top-16 left-4 right-4 rounded-2xl border border-hairline bg-card/95 backdrop-blur-xl p-3 flex flex-col gap-1">
-          {links.map((l) => (
-            <a
-              key={l.id}
-              href={`#${l.id}`}
-              onClick={() => setOpen(false)}
-              className={`px-3 py-2.5 rounded-lg text-sm ${
-                active === l.id ? "text-ink bg-white/10" : "text-muted"
-              }`}
-            >
-              {l.label}
-            </a>
-          ))}
+      <div id="mobile-menu" aria-hidden={!open} className={`mobile-menu${open ? " is-open" : ""}`}>
+        {links.map((l) => (
           <a
-            href={profile.social.resume}
-            className="px-3 py-2.5 rounded-lg text-sm text-mint flex items-center gap-1.5"
+            key={l.id}
+            href={`#${l.id}`}
+            onClick={() => setOpen(false)}
+            tabIndex={open ? 0 : -1}
+            className={`mobile-menu__link ${active === l.id ? "is-active" : ""}`}
           >
-            <FileText size={14} />
-            {heroContent.buttons.resume}
+            {l.label}
           </a>
-        </div>
-      )}
+        ))}
+        <a
+          href={profile.social.resume}
+          tabIndex={open ? 0 : -1}
+          className="mobile-menu__link mobile-menu__resume"
+        >
+          <FileText size={14} />
+          {heroContent.buttons.resume}
+        </a>
+      </div>
     </header>
   );
 }

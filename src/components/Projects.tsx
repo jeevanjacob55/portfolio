@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { projects, categories, Project } from "../data/projects";
 import ProjectCard from "./ProjectCard";
 import ProjectModal from "./ProjectModal";
+import SectionHeading from "./SectionHeading";
 
 export default function Projects() {
   const [filter, setFilter] = useState<(typeof categories)[number]>("All");
@@ -15,10 +16,10 @@ export default function Projects() {
   return (
     <section id="projects" className="py-24 px-6 sm:px-10">
       <div className="max-w-6xl mx-auto">
-        <div className="flex flex-col items-center gap-6 mb-10">
-          <h2 className="font-heading font-semibold text-3xl text-ink text-center">Projects</h2>
+        <div className="flex flex-col items-start gap-0 mb-10">
+          <SectionHeading index="04" title="Projects" />
 
-          <div className="flex flex-wrap justify-center gap-2">
+          <div className="flex flex-wrap justify-start gap-2">
             {categories.map((c) => (
               <button
                 key={c}

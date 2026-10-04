@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type KeyboardEvent, type MouseEvent, type PointerEvent } from "react";
 import { ChevronDown, MapPin } from "lucide-react";
 import { experience } from "../data/experience";
+import SectionHeading from "./SectionHeading";
 
 export default function Experience() {
   const [activeId, setActiveId] = useState<string | null>(null);
@@ -62,9 +63,7 @@ export default function Experience() {
   return (
     <section id="experience" className="py-24 px-6 sm:px-10">
       <div className="max-w-5xl mx-auto">
-        <h2 className="font-heading font-semibold text-3xl text-ink text-center mb-14">
-          Experience
-        </h2>
+        <SectionHeading index="02" title="Experience" />
 
         <div className="experience-timeline">
           {experience.map((entry) => {
