@@ -4,7 +4,7 @@ import { experience } from "../data/experience";
 import SectionHeading from "./SectionHeading";
 
 export default function Experience() {
-  const [activeId, setActiveId] = useState<string | null>(null);
+  const [activeId, setActiveId] = useState<string | null>(experience[0]?.id ?? null);
   const leaveTimer = useRef<number | null>(null);
 
   useEffect(() => () => {
@@ -63,7 +63,7 @@ export default function Experience() {
   return (
     <section id="experience" className="py-24 px-6 sm:px-10">
       <div className="max-w-5xl mx-auto">
-        <SectionHeading index="02" title="Experience" />
+        <SectionHeading index="01" title="Experience" />
 
         <div className="experience-timeline">
           {experience.map((entry) => {
@@ -106,6 +106,7 @@ export default function Experience() {
                       <MapPin size={14} aria-hidden="true" />
                       <span>{entry.location}</span>
                     </p>
+                    <p className="experience-entry__description">{entry.summary}</p>
                   </div>
                 </div>
 
@@ -118,7 +119,6 @@ export default function Experience() {
                   onClick={(event) => handleClick(event, entry.id)}
                 >
                   <div className="experience-entry__details-inner">
-                    <p className="experience-entry__description">{entry.summary}</p>
                     <ul className="experience-entry__list">
                       {entry.details.map((detail, index) => (
                         <li key={`${entry.id}-detail-${index}`}>{detail}</li>

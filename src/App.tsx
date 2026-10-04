@@ -1,7 +1,9 @@
 import { useEffect } from "react";
+import AnimatedBackground from "./components/AnimatedBackground";
 import CursorFollower from "./components/CursorFollower";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
+import About from "./components/About";
 import Experience from "./components/Experience";
 import Education from "./components/Education";
 import Projects from "./components/Projects";
@@ -41,6 +43,7 @@ export default function App() {
 
   return (
     <div className="relative isolate min-h-screen">
+      <AnimatedBackground />
       <div className="site-grid" aria-hidden="true" />
       <CursorFollower />
       <Navbar />
@@ -48,8 +51,9 @@ export default function App() {
         <main>
           <Hero />
           <Experience />
-          <Education />
           <Projects />
+          <About />
+          <Education />
           <TechStack />
           <Contact />
         </main>

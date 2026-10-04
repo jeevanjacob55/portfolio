@@ -17,7 +17,7 @@ export default function Projects() {
     <section id="projects" className="py-24 px-6 sm:px-10">
       <div className="max-w-6xl mx-auto">
         <div className="flex flex-col items-start gap-0 mb-10">
-          <SectionHeading index="04" title="Projects" />
+          <SectionHeading index="02" title="Selected work" />
 
           <div className="flex flex-wrap justify-start gap-2">
             {categories.map((c) => (

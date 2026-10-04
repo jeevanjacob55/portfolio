@@ -5,7 +5,7 @@ export default function Education() {
   return (
     <section id="education" className="py-4 px-6 sm:px-10">
       <div className="max-w-4xl mx-auto">
-        <SectionHeading index="03" title="Education" />
+        <SectionHeading index="04" title="Education" />
 
         <div className="border-l border-hairline">
           {education.map((entry) => (

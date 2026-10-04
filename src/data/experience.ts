@@ -12,10 +12,10 @@ export interface ExperienceEntry {
 export const experience: ExperienceEntry[] = [
   {
     id: "aaric",
-    role: "Software Developer Intern",
+    role: "Software Developer Engineer",
     company: "Army AI Research & Incubation Centre (AARIC)",
     location: "Bangalore, India",
-    dates: "01/26 - 04/26",
+    dates: "01/26 - 06/26",
     summary:
       "Developed and shipped a secure, offline-capable AI annotation platform used by Indian Army personnel for annotating large-scale image datasets for AI model training.",
     details: [
@@ -32,7 +32,7 @@ export const experience: ExperienceEntry[] = [
     role: "Frontend Developer",
     company: "TheXtruder",
     location: "Thrissur, Kerala",
-    dates: "05/25 - 06/25",
+    dates: "05/25 - 11/25",
     summary:
       "Developed a client-facing React website, working directly with clients to translate business requirements into responsive, functional web experiences.",
     details: [

@@ -5,7 +5,7 @@ export interface Project {
   description: string;
   longDescription: string[];
   tags: string[];
-  images: string[]; // paths under /public/images/projects — replace with real screenshots
+  images: string[]; // paths under /public/images/projects for project covers or screenshots
   github?: string;
   demo?: string;
 }
@@ -30,9 +30,7 @@ export const projects: Project[] = [
     ],
     tags: ["React Native", "Expo", "React", "Django REST Framework", "PostgreSQL"],
     images: [
-      "/images/projects/jewelhub-1.svg",
-      "/images/projects/jewelhub-2.svg",
-      "/images/projects/jewelhub-3.svg",
+      `${import.meta.env.BASE_URL}images/projects/jewelhub-cover.svg`,
     ],
   },
   {
@@ -50,8 +48,7 @@ export const projects: Project[] = [
     ],
     tags: ["Python", "Flask", "SQLAlchemy", "PostgreSQL", "React", "MinIO", "Redis", "Celery"],
     images: [
-      "/images/projects/aaric-1.svg",
-      "/images/projects/aaric-2.svg",
+      `${import.meta.env.BASE_URL}images/projects/aaric-cover.svg`,
     ],
   },
   {
@@ -68,7 +65,7 @@ export const projects: Project[] = [
       "Integrated AI-powered symptom processing that analyzes user-entered symptoms and provides preliminary health-related insights through the website.",
     ],
     tags: ["Embedded Systems", "Ultrasonic Sensors", "IR Sensors", "MPU6050", "Robotics", "AI"],
-    images: ["/images/projects/medbot-1.svg"],
+    images: [`${import.meta.env.BASE_URL}images/projects/medbot-cover.svg`],
   },
 ];
 
