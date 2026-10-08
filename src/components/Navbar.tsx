@@ -4,15 +4,15 @@ import { profile } from "../data/profile";
 import { heroContent } from "../data/heroContent";
 
 const links = [
+  { id: "about", label: "About" },
   { id: "experience", label: "Experience" },
   { id: "projects", label: "Projects" },
-  { id: "about", label: "About" },
   { id: "stack", label: "Stack" },
   { id: "contact", label: "Contact" },
 ];
 
 export default function Navbar() {
-  const [active, setActive] = useState("experience");
+  const [active, setActive] = useState("");
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -45,7 +45,7 @@ export default function Navbar() {
     <header className={`site-header${scrolled ? " is-scrolled" : ""}`}>
       <nav className="navbar-shell">
         <a href="#home" className="navbar-logo">
-          {heroContent.name.split(" ")[0]}
+          Portfolio
         </a>
 
         <ul className="navbar-links hidden md:flex">
@@ -69,8 +69,8 @@ export default function Navbar() {
           href={profile.social.resume}
           className="navbar-resume hidden md:inline-flex items-center gap-1.5"
         >
-          <FileText size={14} />
           {heroContent.buttons.resume}
+          <FileText size={16} />
         </a>
 
         <button

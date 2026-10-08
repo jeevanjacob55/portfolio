@@ -56,12 +56,12 @@ const FRAGMENT_SHADER = `
   void main() {
     vec2 uv = v_uv;
     vec2 p = (uv - 0.5) * vec2(u_resolution.x / u_resolution.y, 1.0);
-    const float LOOP_SECONDS = 20.0;
+    const float LOOP_SECONDS = 14.0;
     const float TAU = 6.28318530718;
     float phase = mod(u_time, LOOP_SECONDS) * (TAU / LOOP_SECONDS);
 
     // Periodic domain warps create fluid currents and return to their exact
-    // starting coordinates every three minutes for a seamless loop.
+    // starting coordinates every 14 seconds for a seamless loop.
     vec2 driftA = vec2(cos(phase), sin(phase)) * 0.22;
     vec2 driftB = vec2(cos(phase + 1.7), sin(phase + 1.7)) * 0.19;
     vec2 warpA = vec2(
@@ -96,8 +96,23 @@ const FRAGMENT_SHADER = `
     color = mix(color, u_lavenderBlue, lavenderCloud);
     color = mix(color, u_sapphire, sapphireCloud);
 
+    // Broad warped illumination keeps the light field concentrated around
+    // the left-center and lower-right while preserving soft, irregular edges.
+    float leftEdge = length((p - vec2(-0.57, 0.18) + driftA * 0.07) * vec2(0.78, 1.04))
+      + (fbm(p * 1.42 + driftB) - 0.5) * 0.34;
+    float leftGlow = (1.0 - smoothstep(0.16, 1.08, leftEdge)) * smoothstep(-0.3, 0.03, p.y);
+    float centerEdge = length((p - vec2(0.12, -0.02) + driftC * 0.08) * vec2(0.8, 1.18))
+      + (fbm(p * 1.18 + vec2(3.1, 7.7) + driftD) - 0.5) * 0.38;
+    float centerGlow = 1.0 - smoothstep(0.18, 1.2, centerEdge);
+    float lowerRightEdge = length((p - vec2(0.66, -0.23) + driftB * 0.08) * vec2(0.82, 1.2))
+      + (fbm(p * 1.34 + vec2(8.4, 2.3) + driftA) - 0.5) * 0.4;
+    float lowerRightGlow = 1.0 - smoothstep(0.16, 0.95, lowerRightEdge);
+    color = mix(color, u_ice, leftGlow * 0.72);
+    color = mix(color, u_silverBlue, centerGlow * 0.38);
+    color = mix(color, u_sapphire, lowerRightGlow * 0.4);
+
     // Static, fine grain stays stable between frames and avoids visible flicker.
-    float grain = (hash(gl_FragCoord.xy) - 0.5) * 0.01;
+    float grain = (hash(gl_FragCoord.xy) - 0.5) * 0.026;
     color += grain;
 
     gl_FragColor = vec4(color, 1.0);
@@ -150,13 +165,13 @@ export default function AnimatedBackground() {
     let timeLocation: WebGLUniformLocation | null = null;
     let paletteLocations: (WebGLUniformLocation | null)[] = [];
     const paletteColors: PaletteColor[] = [
-      readPaletteColor("--color-base", [3, 8, 23]),
-      readPaletteColor("--color-deep", [10, 22, 51]),
-      readPaletteColor("--color-royal", [18, 54, 107]),
-      readPaletteColor("--mesh-ice", [224, 242, 254]),
-      readPaletteColor("--mesh-silver-blue", [147, 197, 253]),
-      readPaletteColor("--mesh-lavender-blue", [165, 180, 252]),
-      readPaletteColor("--mesh-sapphire", [59, 130, 246]),
+      readPaletteColor("--color-base", [2, 9, 29]),
+      readPaletteColor("--color-deep", [3, 19, 46]),
+      readPaletteColor("--color-royal", [24, 82, 127]),
+      readPaletteColor("--mesh-ice", [120, 185, 226]),
+      readPaletteColor("--mesh-silver-blue", [67, 136, 184]),
+      readPaletteColor("--mesh-lavender-blue", [55, 112, 154]),
+      readPaletteColor("--mesh-sapphire", [24, 82, 127]),
     ];
     let frameId = 0;
     let elapsed = 0;

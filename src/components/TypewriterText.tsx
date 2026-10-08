@@ -9,7 +9,7 @@ const TRANSITION_PAUSE = 360;
 export default function TypewriterText() {
   const roles = heroContent.roles;
   const [roleIndex, setRoleIndex] = useState(0);
-  const [characterCount, setCharacterCount] = useState(0);
+  const [characterCount, setCharacterCount] = useState(4);
   const [deleting, setDeleting] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(() =>
     window.matchMedia("(prefers-reduced-motion: reduce)").matches

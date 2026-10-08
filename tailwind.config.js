@@ -13,9 +13,10 @@ export default {
         card: "rgb(var(--color-deep) / <alpha-value>)",
       },
       fontFamily: {
-        display: ["'Inter'", "sans-serif"],
-        heading: ["'Inter'", "sans-serif"],
-        body: ["'Inter'", "sans-serif"],
+        sans: ["'Google Sans Flex'", "'Google Sans'", "Arial", "sans-serif"],
+        display: ["'Google Sans Flex'", "'Google Sans'", "Arial", "sans-serif"],
+        heading: ["'Google Sans Flex'", "'Google Sans'", "Arial", "sans-serif"],
+        body: ["'Google Sans Flex'", "'Google Sans'", "Arial", "sans-serif"],
       },
       borderColor: {
         hairline: "rgb(var(--color-light) / 0.10)",

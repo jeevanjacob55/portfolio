@@ -16,10 +16,10 @@ export default function Projects() {
   return (
     <section id="projects" className="py-24 px-6 sm:px-10">
       <div className="max-w-6xl mx-auto">
-        <div className="flex flex-col items-start gap-0 mb-10">
+        <div className="flex flex-col items-center gap-0 mb-10">
           <SectionHeading index="02" title="Selected work" />
 
-          <div className="flex flex-wrap justify-start gap-2">
+          <div className="flex flex-wrap justify-center gap-2">
             {categories.map((c) => (
               <button
                 key={c}

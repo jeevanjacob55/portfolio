@@ -12,7 +12,7 @@ export default function TechStack() {
         <div className="grid sm:grid-cols-2 gap-5">
           {skills.map((group, i) => (
             <div key={group.category} className="gradient-card rounded-2xl border border-hairline p-5">
-              <div className="flex items-center gap-2 mb-4">
+              <div className="flex items-center justify-center gap-2 mb-4">
                 <span className={`w-1.5 h-1.5 rounded-full ${dotColors[i % dotColors.length]}`} />
                 <h3 className="text-sm text-ink font-medium">{group.category}</h3>
               </div>
