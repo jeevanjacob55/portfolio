@@ -86,7 +86,7 @@ export default function CursorFollower() {
       if (event.relatedTarget === null) {
         visible = false;
         cursor.style.opacity = "0";
-        cursor.classList.remove("is-hovered");
+        cursor.classList.remove("is-hovered", "is-clicking");
         if (frameId) window.cancelAnimationFrame(frameId);
         frameId = 0;
         return;
@@ -95,10 +95,18 @@ export default function CursorFollower() {
       cursor.classList.toggle("is-hovered", Boolean(closestInteractive(event.relatedTarget)));
     };
 
+    const handlePointerDown = (event: PointerEvent) => {
+      if (event.pointerType !== "touch") cursor.classList.add("is-clicking");
+    };
+
+    const handlePointerUp = (event: PointerEvent) => {
+      if (event.pointerType !== "touch") cursor.classList.remove("is-clicking");
+    };
+
     const handleWindowBlur = () => {
       visible = false;
       cursor.style.opacity = "0";
-      cursor.classList.remove("is-hovered");
+      cursor.classList.remove("is-hovered", "is-clicking");
       if (frameId) window.cancelAnimationFrame(frameId);
       frameId = 0;
     };
@@ -106,12 +114,18 @@ export default function CursorFollower() {
     document.addEventListener("pointermove", handlePointerMove);
     document.addEventListener("pointerover", handlePointerOver);
     document.addEventListener("pointerout", handlePointerOut);
+    document.addEventListener("pointerdown", handlePointerDown);
+    document.addEventListener("pointerup", handlePointerUp);
+    document.addEventListener("pointercancel", handlePointerUp);
     window.addEventListener("blur", handleWindowBlur);
 
     return () => {
       document.removeEventListener("pointermove", handlePointerMove);
       document.removeEventListener("pointerover", handlePointerOver);
       document.removeEventListener("pointerout", handlePointerOut);
+      document.removeEventListener("pointerdown", handlePointerDown);
+      document.removeEventListener("pointerup", handlePointerUp);
+      document.removeEventListener("pointercancel", handlePointerUp);
       window.removeEventListener("blur", handleWindowBlur);
       if (frameId) window.cancelAnimationFrame(frameId);
     };

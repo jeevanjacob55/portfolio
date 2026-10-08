@@ -321,19 +321,21 @@ textarea:focus-visible {
 
 .cursor-follower__orb {
   display: block;
-  width: 20px;
-  height: 20px;
-  border: 1px solid rgb(0 0 0 / 0.82);
+  width: 16px;
+  height: 16px;
+  border: 0;
   border-radius: 50%;
-  background: rgb(0 0 0 / 0.04);
+  background: #000000;
   transform: translate(-50%, -50%) scale(1);
-  transition: transform 400ms var(--ease-standard), background-color 400ms ease, border-color 400ms ease;
+  transition: transform 220ms var(--ease-standard);
 }
 
 .cursor-follower.is-hovered .cursor-follower__orb {
-  border-color: rgb(0 0 0 / 1);
-  background: rgb(0 0 0 / 0.08);
-  transform: translate(-50%, -50%) scale(1.35);
+  transform: translate(-50%, -50%) scale(1.375);
+}
+
+.cursor-follower.is-clicking .cursor-follower__orb {
+  transform: translate(-50%, -50%) scale(0.9);
 }
 
 @media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
@@ -699,19 +701,43 @@ button .text-muted {
 }
 
 .gradient-card {
-  background: #FFFFFF;
+  --color-light: 255 255 255;
+  --color-muted: 255 255 255;
+  --color-ice: 255 255 255;
+  background: #000000;
+}
+
+.gradient-card :is(h1, h2, h3, h4, h5, h6, p, a, button, span, li) {
+  color: #FFFFFF !important;
+}
+
+.gradient-card .text-muted {
+  color: #FFFFFF !important;
+}
+
+.gradient-card .border-hairline {
+  border-color: rgb(255 255 255 / 0.2);
+}
+
+.gradient-card .bg-mint {
+  background-color: #FFFFFF;
+}
+
+.gradient-card .project-card__action,
+.gradient-card .project-card:hover .project-card__action {
+  color: #FFFFFF;
 }
 
 .project-card,
 .gradient-card.rounded-2xl {
-  border-color: rgb(0 0 0 / 0.14);
+  border-color: rgb(255 255 255 / 0.18);
   border-radius: 14px;
   transition: transform 250ms var(--ease-standard), border-color 250ms ease, background-color 250ms ease;
 }
 
 .project-card:hover,
 .gradient-card.rounded-2xl:hover {
-  border-color: rgb(0 0 0 / 0.3);
+  border-color: rgb(255 255 255 / 0.3);
   transform: translateY(-4px);
 }
 
