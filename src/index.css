@@ -5,6 +5,7 @@
 :root {
   color-scheme: dark;
   --color-base: 5 11 20;
+  --mesh-base: 6 21 37;
   --color-deep: 5 11 20;
   --color-royal: 5 11 20;
   --color-cyan: 244 247 251;
@@ -921,7 +922,7 @@ button .text-muted {
   position: absolute;
   inset: 8% -12% -8%;
   border-radius: 50%;
-  background: rgb(var(--color-base));
+  background: rgb(var(--mesh-base));
   filter: blur(26px);
   pointer-events: none;
 }

@@ -40,8 +40,11 @@ const FRAGMENT_SHADER = `
     float blob2 = organicBlob(p - pointerOffset * 0.7, vec2(0.42 + 0.12 * cos(phase + 1.2), -0.16 + 0.10 * sin(phase + 1.2)), vec2(0.62, 0.39), phase + 2.1);
     float blob3 = organicBlob(p, vec2(-0.08 + 0.16 * cos(phase + 2.5), -0.42 + 0.07 * sin(phase + 2.5)), vec2(0.48, 0.30), phase + 4.0);
     float blob4 = organicBlob(p, vec2(0.08, 0.48 + 0.06 * sin(phase + 3.4)), vec2(0.42, 0.28), phase + 5.3);
-    float lightAmount = 1.0 - (1.0 - blob1 * 0.105) * (1.0 - blob2 * 0.12) * (1.0 - blob3 * 0.095) * (1.0 - blob4 * 0.085);
-    vec3 base = vec3(5.0, 11.0, 20.0) / 255.0;
+    float lightAmount = 1.0 - (1.0 - blob1 * 0.126) * (1.0 - blob2 * 0.144) * (1.0 - blob3 * 0.114) * (1.0 - blob4 * 0.102);
+    float grainCoverage = max(max(blob1, blob2), max(blob3, blob4));
+    float grain = fract(52.9829189 * fract(dot(floor(gl_FragCoord.xy), vec2(0.06711056, 0.00583715)))) - 0.5;
+    lightAmount = clamp(lightAmount + grain * 0.07 * grainCoverage, 0.0, 0.5);
+    vec3 base = vec3(6.0, 21.0, 37.0) / 255.0;
     vec3 light = vec3(244.0, 247.0, 251.0) / 255.0;
     gl_FragColor = vec4(mix(base, light, lightAmount), 1.0);
   }
