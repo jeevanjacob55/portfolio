@@ -34,7 +34,8 @@ export default function CursorFollower() {
       frameId = 0;
       const elapsed = Math.min(time - lastFrameTime, 48);
       lastFrameTime = time;
-      const easing = 1 - Math.exp(-elapsed / 78);
+      // A longer response time gives the follower a deliberate, slow drift.
+      const easing = 1 - Math.exp(-elapsed / 190);
 
       currentX += (targetX - currentX) * easing;
       currentY += (targetY - currentY) * easing;

@@ -10,7 +10,7 @@
   --color-cyan: 67 136 184;
   --color-ice: 120 185 226;
   --color-light: 245 247 250;
-  --color-muted: 213 220 229;
+  --color-muted: 226 232 240;
   --mesh-ice: 120 185 226;
   --mesh-silver-blue: 67 136 184;
   --mesh-lavender-blue: 55 112 154;
@@ -320,19 +320,21 @@ textarea:focus-visible {
 
 .cursor-follower__orb {
   display: block;
-  width: 24px;
-  height: 24px;
-  border: 1px solid rgb(255 255 255 / 0.2);
+  width: 20px;
+  height: 20px;
+  border: 1px solid rgb(255 255 255 / 0.82);
   border-radius: 50%;
-  background: rgb(255 255 255 / 0.06);
+  background: rgb(255 255 255 / 0.16);
+  box-shadow: 0 0 18px rgb(255 255 255 / 0.16), inset 0 0 8px rgb(255 255 255 / 0.18);
   transform: translate(-50%, -50%) scale(1);
-  transition: transform 200ms var(--ease-standard), background-color 200ms ease, border-color 200ms ease;
+  transition: transform 400ms var(--ease-standard), background-color 400ms ease, border-color 400ms ease, box-shadow 400ms ease;
 }
 
 .cursor-follower.is-hovered .cursor-follower__orb {
-  border-color: rgb(255 255 255 / 0.28);
-  background: rgb(255 255 255 / 0.12);
-  transform: translate(-50%, -50%) scale(1.667);
+  border-color: rgb(255 255 255 / 1);
+  background: rgb(255 255 255 / 0.24);
+  box-shadow: 0 0 24px rgb(255 255 255 / 0.24), inset 0 0 10px rgb(255 255 255 / 0.24);
+  transform: translate(-50%, -50%) scale(1.35);
 }
 
 @media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
@@ -689,13 +691,13 @@ html.has-scroll-reveal .site-content main > section[id]:not(#home).is-revealed {
 }
 
 .text-muted {
-  color: #a1a1aa;
+  color: rgb(var(--color-muted));
 }
 
 a.text-muted,
 button.text-muted,
 button .text-muted {
-  color: #a1a1aa;
+  color: rgb(var(--color-muted));
 }
 
 .text-mint {
