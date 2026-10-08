@@ -18,35 +18,37 @@ const FRAGMENT_SHADER = `
   uniform vec2 u_pointer;
   varying vec2 v_uv;
 
-  float organicBlob(vec2 p, vec2 center, vec2 radius, float phase) {
+  float circularBlob(vec2 p, vec2 center, vec2 radius) {
     vec2 scaledRadius = radius * 0.8;
     vec2 q = (p - center) / scaledRadius;
-    float angle = atan(q.y, q.x);
-    float contour = 1.0
-      + 0.12 * sin(angle * 3.0 + phase)
-      + 0.075 * sin(angle * 2.0 - phase * 1.3)
-      + 0.045 * cos(angle * 5.0 + phase * 0.7);
-    float distanceToEdge = (contour - length(q)) * min(scaledRadius.x, scaledRadius.y);
-    return smoothstep(-0.104, 0.104, distanceToEdge);
+    float distanceToEdge = (1.0 - length(q)) * min(scaledRadius.x, scaledRadius.y);
+    float softEdge = smoothstep(-0.11, 0.11, distanceToEdge);
+    float centerFalloff = 0.72 + 0.28 * exp(-dot(q, q) * 0.8);
+    return softEdge * centerFalloff;
   }
 
   void main() {
     vec2 p = (v_uv - 0.5) * vec2(u_resolution.x / u_resolution.y, 1.0);
-    const float LOOP_SECONDS = 16.0;
+    const float LOOP_SECONDS = 32.0;
     const float TAU = 6.28318530718;
     float phase = mod(u_time, LOOP_SECONDS) * (TAU / LOOP_SECONDS);
     vec2 pointerOffset = u_pointer * 0.018;
-    float blob1 = organicBlob(p - pointerOffset, vec2(-0.38 + 0.13 * sin(phase), 0.22 + 0.08 * cos(phase)), vec2(0.58, 0.34), phase + 0.2);
-    float blob2 = organicBlob(p - pointerOffset * 0.7, vec2(0.42 + 0.12 * cos(phase + 1.2), -0.16 + 0.10 * sin(phase + 1.2)), vec2(0.62, 0.39), phase + 2.1);
-    float blob3 = organicBlob(p, vec2(-0.08 + 0.16 * cos(phase + 2.5), -0.42 + 0.07 * sin(phase + 2.5)), vec2(0.48, 0.30), phase + 4.0);
-    float blob4 = organicBlob(p, vec2(0.08, 0.48 + 0.06 * sin(phase + 3.4)), vec2(0.42, 0.28), phase + 5.3);
-    float lightAmount = 1.0 - (1.0 - blob1 * 0.126) * (1.0 - blob2 * 0.144) * (1.0 - blob3 * 0.114) * (1.0 - blob4 * 0.102);
-    float grainCoverage = max(max(blob1, blob2), max(blob3, blob4));
+    float blob1 = circularBlob(p - pointerOffset, vec2(-0.52 + 0.19 * sin(phase), 0.22 + 0.12 * cos(phase)), vec2(0.88 + 0.04 * sin(phase)));
+    float blob2 = circularBlob(p - pointerOffset * 0.7, vec2(0.48 + 0.17 * cos(phase + 1.2), -0.2 + 0.14 * sin(phase + 1.2)), vec2(0.82 + 0.035 * cos(phase + 1.2)));
+    float blob3 = circularBlob(p, vec2(-0.12 + 0.16 * cos(phase + 2.5), -0.58 + 0.12 * sin(phase + 2.5)), vec2(0.76 + 0.03 * sin(phase + 2.5)));
+    float blob4 = circularBlob(p, vec2(0.18 + 0.15 * sin(phase + 3.4), 0.52 + 0.13 * cos(phase + 3.4)), vec2(0.68 + 0.035 * cos(phase + 3.4)));
     float grain = fract(52.9829189 * fract(dot(floor(gl_FragCoord.xy), vec2(0.06711056, 0.00583715)))) - 0.5;
-    lightAmount = clamp(lightAmount + grain * 0.07 * grainCoverage, 0.0, 0.5);
-    vec3 base = vec3(6.0, 21.0, 37.0) / 255.0;
-    vec3 light = vec3(244.0, 247.0, 251.0) / 255.0;
-    gl_FragColor = vec4(mix(base, light, lightAmount), 1.0);
+    float grainFactor = 1.0 + grain * 0.24;
+    vec3 color = vec3(3.0) / 255.0;
+    float opacity1 = clamp(blob1 * 0.18 * grainFactor, 0.0, 0.2);
+    float opacity2 = clamp(blob2 * 0.17 * grainFactor, 0.0, 0.2);
+    float opacity3 = clamp(blob3 * 0.15 * grainFactor, 0.0, 0.2);
+    float opacity4 = clamp(blob4 * 0.13 * grainFactor, 0.0, 0.2);
+    color = mix(color, vec3(96.0, 165.0, 250.0) / 255.0, opacity1);
+    color = mix(color, vec3(59.0, 130.0, 246.0) / 255.0, opacity2);
+    color = mix(color, vec3(37.0, 99.0, 235.0) / 255.0, opacity3);
+    color = mix(color, vec3(29.0, 78.0, 216.0) / 255.0, opacity4);
+    gl_FragColor = vec4(color, 1.0);
   }
 `;
 

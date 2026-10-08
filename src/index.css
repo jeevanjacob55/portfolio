@@ -5,7 +5,7 @@
 :root {
   color-scheme: dark;
   --color-base: 5 11 20;
-  --mesh-base: 6 21 37;
+  --mesh-base: 3 3 3;
   --color-deep: 5 11 20;
   --color-royal: 5 11 20;
   --color-cyan: 244 247 251;
@@ -81,7 +81,7 @@ textarea:focus-visible {
   border-radius: 4px;
 }
 
-/* ---------- Slow soft white organic background ---------- */
+/* ---------- Slow diffused red cinematic background ---------- */
 .mesh-bg {
   position: fixed;
   inset: 0;
@@ -89,7 +89,7 @@ textarea:focus-visible {
   pointer-events: none;
   overflow: hidden;
   isolation: isolate;
-  background: rgb(var(--color-base));
+  background: rgb(var(--mesh-base));
 }
 
 .mesh-canvas {
@@ -922,7 +922,7 @@ button .text-muted {
   position: absolute;
   inset: 8% -12% -8%;
   border-radius: 50%;
-  background: rgb(var(--mesh-base));
+  background: rgb(var(--color-base));
   filter: blur(26px);
   pointer-events: none;
 }
@@ -1801,7 +1801,7 @@ html::-webkit-scrollbar-thumb:hover {
   left: 50%;
   width: min(1200px, calc(100% - 2 * clamp(20px, 4vw, 48px)));
   height: 1px;
-  background: rgb(var(--color-base));
+  background: rgb(var(--color-light) / 0.15);
   content: "";
   transform: translateX(-50%);
 }
