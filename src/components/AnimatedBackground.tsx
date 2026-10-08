@@ -15,124 +15,37 @@ const FRAGMENT_SHADER = `
 
   uniform vec2 u_resolution;
   uniform float u_time;
-  uniform vec3 u_base;
-  uniform vec3 u_secondary;
-  uniform vec3 u_undertone;
-  uniform vec3 u_ice;
-  uniform vec3 u_silverBlue;
-  uniform vec3 u_lavenderBlue;
-  uniform vec3 u_sapphire;
+  uniform vec2 u_pointer;
   varying vec2 v_uv;
 
-  float hash(vec2 p) {
-    p = fract(p * vec2(123.34, 456.21));
-    p += dot(p, p + 45.32);
-    return fract(p.x * p.y);
-  }
-
-  float noise(vec2 p) {
-    vec2 cell = floor(p);
-    vec2 local = fract(p);
-    local = local * local * (3.0 - 2.0 * local);
-
-    float a = hash(cell);
-    float b = hash(cell + vec2(1.0, 0.0));
-    float c = hash(cell + vec2(0.0, 1.0));
-    float d = hash(cell + vec2(1.0, 1.0));
-    return mix(mix(a, b, local.x), mix(c, d, local.x), local.y);
-  }
-
-  float fbm(vec2 p) {
-    float value = 0.0;
-    float amplitude = 0.5;
-    for (int octave = 0; octave < 4; octave++) {
-      value += amplitude * noise(p);
-      p = p * 2.03 + vec2(17.1, 9.2);
-      amplitude *= 0.5;
-    }
-    return value / 0.9375;
+  float organicBlob(vec2 p, vec2 center, vec2 radius, float phase) {
+    vec2 scaledRadius = radius * 0.8;
+    vec2 q = (p - center) / scaledRadius;
+    float angle = atan(q.y, q.x);
+    float contour = 1.0
+      + 0.12 * sin(angle * 3.0 + phase)
+      + 0.075 * sin(angle * 2.0 - phase * 1.3)
+      + 0.045 * cos(angle * 5.0 + phase * 0.7);
+    float distanceToEdge = (contour - length(q)) * min(scaledRadius.x, scaledRadius.y);
+    return smoothstep(-0.104, 0.104, distanceToEdge);
   }
 
   void main() {
-    vec2 uv = v_uv;
-    vec2 p = (uv - 0.5) * vec2(u_resolution.x / u_resolution.y, 1.0);
-    const float LOOP_SECONDS = 14.0;
+    vec2 p = (v_uv - 0.5) * vec2(u_resolution.x / u_resolution.y, 1.0);
+    const float LOOP_SECONDS = 16.0;
     const float TAU = 6.28318530718;
     float phase = mod(u_time, LOOP_SECONDS) * (TAU / LOOP_SECONDS);
-
-    // Periodic domain warps create fluid currents and return to their exact
-    // starting coordinates every 14 seconds for a seamless loop.
-    vec2 driftA = vec2(cos(phase), sin(phase)) * 0.22;
-    vec2 driftB = vec2(cos(phase + 1.7), sin(phase + 1.7)) * 0.19;
-    vec2 warpA = vec2(
-      fbm(p * 0.92 + driftA),
-      fbm(p * 0.92 + vec2(5.2, 2.7) + driftB)
-    );
-    vec2 warped = p * 1.12 + (warpA - 0.5) * 1.85;
-    vec2 driftC = vec2(cos(phase * 2.0 + 0.8), sin(phase * 2.0 + 0.8)) * 0.14;
-    vec2 driftD = vec2(cos(phase * 2.0 + 2.6), sin(phase * 2.0 + 2.6)) * 0.12;
-    vec2 warpB = vec2(
-      fbm(warped * 1.08 + vec2(1.7, 8.1) + driftC),
-      fbm(warped * 1.08 + vec2(6.4, 3.3) + driftD)
-    );
-    vec2 fluid = warped + (warpB - 0.5) * 1.15;
-
-    float broadField = fbm(fluid * 0.62 + driftA * 0.3);
-    float silverField = fbm(fluid * vec2(0.9, 0.76) + driftB * 0.34);
-    float detailField = fbm(fluid * 1.36 + driftC * 0.28);
-    float cloudField = broadField + (silverField - 0.5) * 0.26 + (detailField - 0.5) * 0.12;
-
-    // Wide, warped noise fields make large feathered light formations without
-    // the circular boundaries of ordinary radial-gradient blobs.
-    vec3 color = mix(u_base, u_secondary, smoothstep(0.28, 0.76, cloudField) * 0.64);
-    color = mix(color, u_undertone, smoothstep(0.4, 0.72, silverField + (detailField - 0.5) * 0.12) * 0.3);
-
-    float iceCloud = smoothstep(0.62, 0.82, cloudField) * 0.16;
-    float silverCloud = smoothstep(0.56, 0.78, silverField + (broadField - 0.5) * 0.16) * 0.18;
-    float lavenderCloud = smoothstep(0.64, 0.82, detailField + (broadField - 0.5) * 0.18) * 0.08;
-    float sapphireCloud = smoothstep(0.42, 0.7, broadField + (detailField - 0.5) * 0.16) * 0.13;
-    color = mix(color, u_ice, iceCloud);
-    color = mix(color, u_silverBlue, silverCloud);
-    color = mix(color, u_lavenderBlue, lavenderCloud);
-    color = mix(color, u_sapphire, sapphireCloud);
-
-    // Broad warped illumination keeps the light field concentrated around
-    // the left-center and lower-right while preserving soft, irregular edges.
-    float leftEdge = length((p - vec2(-0.57, 0.18) + driftA * 0.07) * vec2(0.78, 1.04))
-      + (fbm(p * 1.42 + driftB) - 0.5) * 0.34;
-    float leftGlow = (1.0 - smoothstep(0.16, 1.08, leftEdge)) * smoothstep(-0.3, 0.03, p.y);
-    float centerEdge = length((p - vec2(0.12, -0.02) + driftC * 0.08) * vec2(0.8, 1.18))
-      + (fbm(p * 1.18 + vec2(3.1, 7.7) + driftD) - 0.5) * 0.38;
-    float centerGlow = 1.0 - smoothstep(0.18, 1.2, centerEdge);
-    float lowerRightEdge = length((p - vec2(0.66, -0.23) + driftB * 0.08) * vec2(0.82, 1.2))
-      + (fbm(p * 1.34 + vec2(8.4, 2.3) + driftA) - 0.5) * 0.4;
-    float lowerRightGlow = 1.0 - smoothstep(0.16, 0.95, lowerRightEdge);
-    color = mix(color, u_ice, leftGlow * 0.72);
-    color = mix(color, u_silverBlue, centerGlow * 0.38);
-    color = mix(color, u_sapphire, lowerRightGlow * 0.4);
-
-    // Static, fine grain stays stable between frames and avoids visible flicker.
-    float grain = (hash(gl_FragCoord.xy) - 0.5) * 0.026;
-    color += grain;
-
-    gl_FragColor = vec4(color, 1.0);
+    vec2 pointerOffset = u_pointer * 0.018;
+    float blob1 = organicBlob(p - pointerOffset, vec2(-0.38 + 0.13 * sin(phase), 0.22 + 0.08 * cos(phase)), vec2(0.58, 0.34), phase + 0.2);
+    float blob2 = organicBlob(p - pointerOffset * 0.7, vec2(0.42 + 0.12 * cos(phase + 1.2), -0.16 + 0.10 * sin(phase + 1.2)), vec2(0.62, 0.39), phase + 2.1);
+    float blob3 = organicBlob(p, vec2(-0.08 + 0.16 * cos(phase + 2.5), -0.42 + 0.07 * sin(phase + 2.5)), vec2(0.48, 0.30), phase + 4.0);
+    float blob4 = organicBlob(p, vec2(0.08, 0.48 + 0.06 * sin(phase + 3.4)), vec2(0.42, 0.28), phase + 5.3);
+    float lightAmount = 1.0 - (1.0 - blob1 * 0.105) * (1.0 - blob2 * 0.12) * (1.0 - blob3 * 0.095) * (1.0 - blob4 * 0.085);
+    vec3 base = vec3(5.0, 11.0, 20.0) / 255.0;
+    vec3 light = vec3(244.0, 247.0, 251.0) / 255.0;
+    gl_FragColor = vec4(mix(base, light, lightAmount), 1.0);
   }
 `;
-
-type PaletteColor = [number, number, number];
-
-function readPaletteColor(name: string, fallback: PaletteColor): PaletteColor {
-  const channels = getComputedStyle(document.documentElement)
-    .getPropertyValue(name)
-    .trim()
-    .split(/\s+/)
-    .map(Number);
-
-  if (channels.length !== 3 || channels.some((channel) => !Number.isFinite(channel))) {
-    return fallback;
-  }
-  return channels.map((channel) => channel / 255) as PaletteColor;
-}
 
 function compileShader(
   gl: WebGLRenderingContext,
@@ -163,16 +76,11 @@ export default function AnimatedBackground() {
     let positionLocation = -1;
     let resolutionLocation: WebGLUniformLocation | null = null;
     let timeLocation: WebGLUniformLocation | null = null;
-    let paletteLocations: (WebGLUniformLocation | null)[] = [];
-    const paletteColors: PaletteColor[] = [
-      readPaletteColor("--color-base", [2, 9, 29]),
-      readPaletteColor("--color-deep", [3, 19, 46]),
-      readPaletteColor("--color-royal", [24, 82, 127]),
-      readPaletteColor("--mesh-ice", [120, 185, 226]),
-      readPaletteColor("--mesh-silver-blue", [67, 136, 184]),
-      readPaletteColor("--mesh-lavender-blue", [55, 112, 154]),
-      readPaletteColor("--mesh-sapphire", [24, 82, 127]),
-    ];
+    let pointerLocation: WebGLUniformLocation | null = null;
+    let pointerTargetX = 0;
+    let pointerTargetY = 0;
+    let pointerX = 0;
+    let pointerY = 0;
     let frameId = 0;
     let elapsed = 0;
     let previousFrame = 0;
@@ -243,15 +151,7 @@ export default function AnimatedBackground() {
       positionLocation = context.getAttribLocation(nextProgram, "a_position");
       resolutionLocation = context.getUniformLocation(nextProgram, "u_resolution");
       timeLocation = context.getUniformLocation(nextProgram, "u_time");
-      paletteLocations = [
-        "u_base",
-        "u_secondary",
-        "u_undertone",
-        "u_ice",
-        "u_silverBlue",
-        "u_lavenderBlue",
-        "u_sapphire",
-      ].map((name) => context.getUniformLocation(nextProgram, name));
+      pointerLocation = context.getUniformLocation(nextProgram, "u_pointer");
       context.enableVertexAttribArray(positionLocation);
       context.vertexAttribPointer(positionLocation, 2, context.FLOAT, false, 0, 0);
       context.disable(context.DEPTH_TEST);
@@ -266,9 +166,7 @@ export default function AnimatedBackground() {
       gl.useProgram(program);
       gl.uniform2f(resolutionLocation, canvas.width, canvas.height);
       gl.uniform1f(timeLocation, time);
-      paletteLocations.forEach((location, index) => {
-        if (location) gl?.uniform3fv(location, paletteColors[index]);
-      });
+      if (pointerLocation) gl.uniform2f(pointerLocation, pointerX, pointerY);
       gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
     };
 
@@ -305,9 +203,13 @@ export default function AnimatedBackground() {
       frameId = 0;
       if (document.hidden || reducedMotion || !gl) return;
 
-      if (previousFrame) elapsed += timestamp - previousFrame;
+      const frameDelta = previousFrame ? timestamp - previousFrame : 16.67;
+      if (previousFrame) elapsed += frameDelta;
       previousFrame = timestamp;
-      if (timestamp - lastDraw >= 1000 / 30) {
+      const pointerEase = 1 - Math.exp(-frameDelta / 520);
+      pointerX += (pointerTargetX - pointerX) * pointerEase;
+      pointerY += (pointerTargetY - pointerY) * pointerEase;
+      if (timestamp - lastDraw >= 1000 / 60) {
         draw(elapsed / 1000);
         lastDraw = timestamp;
       }
@@ -335,6 +237,10 @@ export default function AnimatedBackground() {
       if (document.hidden) stopAnimation();
       else startAnimation();
     };
+    const handlePointerMove = (event: PointerEvent) => {
+      pointerTargetX = (event.clientX / Math.max(window.innerWidth, 1)) * 2 - 1;
+      pointerTargetY = 1 - (event.clientY / Math.max(window.innerHeight, 1)) * 2;
+    };
     const handleContextLost = (event: Event) => {
       event.preventDefault();
       stopAnimation();
@@ -351,6 +257,7 @@ export default function AnimatedBackground() {
     canvas.addEventListener("webglcontextlost", handleContextLost);
     canvas.addEventListener("webglcontextrestored", handleContextRestored);
     window.addEventListener("resize", resizeAndDraw, { passive: true });
+    window.addEventListener("pointermove", handlePointerMove, { passive: true });
     document.addEventListener("visibilitychange", handleVisibilityChange);
     motionPreference.addEventListener("change", handleMotionChange);
 
@@ -364,6 +271,7 @@ export default function AnimatedBackground() {
       canvas.removeEventListener("webglcontextlost", handleContextLost);
       canvas.removeEventListener("webglcontextrestored", handleContextRestored);
       window.removeEventListener("resize", resizeAndDraw);
+      window.removeEventListener("pointermove", handlePointerMove);
       document.removeEventListener("visibilitychange", handleVisibilityChange);
       motionPreference.removeEventListener("change", handleMotionChange);
       dispose();
