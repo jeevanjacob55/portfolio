@@ -535,6 +535,10 @@ textarea:focus-visible {
     --experience-gap: 0.85rem;
   }
 
+  .experience-entry {
+    grid-template-columns: var(--experience-marker-column) minmax(0, 1fr);
+  }
+
   .experience-timeline::before {
     left: calc(var(--experience-marker-column) / 2);
   }
