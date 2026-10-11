@@ -882,6 +882,7 @@ button .text-muted {
 
 .navbar-shell {
   display: flex;
+  font-family: ui-sans-serif, -apple-system, "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
   width: min(calc(100% - 40px), 1200px);
   height: 100%;
   align-items: center;
@@ -1964,4 +1965,294 @@ h6 {
 .experience-entry__role {
   flex: 1;
   text-align: center;
+}
+
+/* Glass pill navigation, adapted from the supplied reference. */
+.site-header,
+.site-header.is-scrolled {
+  top: calc(env(safe-area-inset-top, 0px) + 20px);
+  right: auto;
+  left: 50%;
+  width: max-content;
+  max-width: calc(100% - 28px);
+  height: auto;
+  border: 0;
+  background: transparent;
+  transform: translateX(-50%);
+  animation: navbar-in 900ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+@keyframes navbar-in {
+  from { opacity: 0; transform: translate(-50%, -14px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+.navbar-shell {
+  display: flex;
+  width: max-content;
+  max-width: 100%;
+  height: auto;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 34px;
+  margin: 0;
+  padding: 10px 10px 10px 26px;
+  border: 1px solid rgb(255 255 255 / 0.85);
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.55);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.95), 0 12px 40px -14px rgb(40 40 80 / 0.2), 0 2px 6px rgb(40 40 80 / 0.05);
+  -webkit-backdrop-filter: blur(26px) saturate(1.7);
+  backdrop-filter: blur(26px) saturate(1.7);
+}
+
+.navbar-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+  color: #14141c;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+}
+
+.navbar-logo::before {
+  width: 17px;
+  height: 17px;
+  flex: none;
+  border-radius: 50%;
+  background: conic-gradient(from 200deg, #c9d6ff, #ffd9e4, #d4f0e4, #e6dcff, #c9d6ff);
+  box-shadow: 0 0 0 1px rgb(20 20 28 / 0.08), 0 2px 8px rgb(150 140 220 / 0.4);
+  content: "";
+}
+
+.navbar-links {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  transform: none;
+}
+
+.navbar-links li {
+  position: relative;
+  z-index: 1;
+  list-style: none;
+}
+
+.navbar-indicator {
+  position: absolute;
+  z-index: 0;
+  top: 0;
+  left: 0;
+  height: 100%;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.9);
+  box-shadow: 0 1px 2px rgb(40 40 80 / 0.08), 0 4px 14px -4px rgb(40 40 80 / 0.12);
+  pointer-events: none;
+  transition: transform 450ms cubic-bezier(0.3, 1.2, 0.4, 1), width 450ms cubic-bezier(0.3, 1.2, 0.4, 1), opacity 250ms ease;
+}
+
+.navbar-link {
+  position: relative;
+  z-index: 1;
+  display: block;
+  min-height: 0;
+  padding: 11px 19px;
+  border-radius: 999px;
+  color: #5d5d70;
+  font-size: 13.5px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 250ms ease;
+}
+
+.navbar-link:hover,
+.navbar-link.is-active {
+  background: transparent;
+  color: #14141c;
+}
+
+.navbar-resume {
+  display: inline-flex;
+  width: auto;
+  min-height: 0;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 13px 24px;
+  border: 0;
+  border-radius: 999px;
+  background: #14141c;
+  box-shadow: 0 6px 18px -6px rgb(20 20 28 / 0.5);
+  color: #fff;
+  font-size: 13.5px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: transform 300ms cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 300ms ease;
+}
+
+.navbar-resume:hover {
+  border-color: transparent;
+  background: #14141c;
+  box-shadow: 0 10px 24px -6px rgb(20 20 28 / 0.55);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+.navbar-resume svg {
+  transition: transform 300ms ease;
+}
+
+.navbar-resume:hover svg {
+  transform: translateY(2px);
+}
+
+.navbar-menu-button {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 50%;
+  background: rgb(255 255 255 / 0.9);
+  color: #14141c;
+}
+
+.navbar-menu-button span {
+  position: absolute;
+  left: 18px;
+  width: 14px;
+  height: 1.5px;
+  border-radius: 2px;
+  background: #14141c;
+  transition: transform 350ms ease, top 350ms ease;
+}
+
+.navbar-menu-button span:first-child { top: 21px; }
+.navbar-menu-button span:last-child { top: 28px; }
+
+.site-header.is-menu-open .navbar-menu-button span:first-child {
+  top: 25px;
+  transform: rotate(45deg);
+}
+
+.site-header.is-menu-open .navbar-menu-button span:last-child {
+  top: 25px;
+  transform: rotate(-45deg);
+}
+
+.navbar-menu-button:hover {
+  border: 0;
+  background: #fff;
+}
+
+.mobile-menu {
+  top: calc(100% + 10px);
+  right: 0;
+  left: auto;
+  width: min(270px, calc(100vw - 28px));
+  gap: 2px;
+  margin-top: 0;
+  padding: 12px;
+  border: 1px solid rgb(255 255 255 / 0.85);
+  border-radius: 34px;
+  background: rgb(255 255 255 / 0.7);
+  box-shadow: 0 18px 40px -14px rgb(40 40 80 / 0.25);
+  -webkit-backdrop-filter: blur(26px) saturate(1.7);
+  backdrop-filter: blur(26px) saturate(1.7);
+  transform: translateY(-8px) scale(0.98);
+  transition: opacity 300ms ease, transform 300ms ease, visibility 300ms;
+}
+
+.mobile-menu__link,
+.mobile-menu__resume {
+  width: 100%;
+  min-height: 50px;
+  justify-content: flex-start;
+  padding: 0 16px;
+  border-radius: 18px;
+  background: transparent;
+  color: #2a2a38;
+  font-size: 15px;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.mobile-menu__link:hover,
+.mobile-menu__link.is-active {
+  background: rgb(255 255 255 / 0.9);
+  color: #14141c;
+}
+
+.mobile-menu__resume {
+  justify-content: center;
+  gap: 8px;
+  margin-top: 6px;
+  background: #14141c;
+  color: #fff;
+}
+
+.mobile-menu__resume:hover {
+  background: #14141c;
+  color: #fff;
+}
+
+@media (min-width: 761px) {
+  .navbar-links {
+    display: flex;
+  }
+
+  .navbar-resume {
+    display: inline-flex;
+  }
+
+  .navbar-menu-button {
+    display: none;
+  }
+
+  .mobile-menu {
+    display: none;
+  }
+}
+
+@media (max-width: 760px) {
+  .navbar-shell {
+    gap: 17px;
+    padding: 10px 10px 10px 22px;
+  }
+
+  .navbar-links,
+  .navbar-resume {
+    display: none;
+  }
+
+  .navbar-menu-button {
+    display: inline-flex;
+  }
+
+  .mobile-menu {
+    display: flex;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-header,
+  .site-header.is-scrolled {
+    animation: none;
+  }
+
+  .navbar-menu-button span {
+    transition-duration: 0.01ms;
+  }
+
+  .navbar-indicator,
+  .navbar-link,
+  .navbar-resume,
+  .navbar-resume svg {
+    transition-duration: 0.01ms;
+  }
 }

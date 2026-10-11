@@ -17,7 +17,7 @@ export const experience: ExperienceEntry[] = [
     location: "Bangalore, India",
     dates: "01/26 - 06/26",
     summary:
-      "Developed and shipped a secure, offline-capable AI annotation platform used by Indian Army personnel for annotating large-scale image datasets for AI model training.",
+      "Developed and shipped a secure AI annotation platform used by Indian Army personnel for annotating large-scale image datasets for AI model training.",
     details: [
       "Selected as one of 10 candidates for the internship; one of two developers building and shipping the platform end to end.",
       "Built backend services using Flask, SQLAlchemy, and PostgreSQL to manage large-scale image datasets and annotation workflows.",
