@@ -4,8 +4,8 @@
 
 :root {
   color-scheme: light;
-  --color-base: 255 255 255;
-  --mesh-base: 255 255 255;
+  --color-base: 247 247 245;
+  --mesh-base: 247 247 245;
   --color-deep: 255 255 255;
   --color-royal: 255 255 255;
   --color-cyan: 0 0 0;
@@ -81,24 +81,127 @@ textarea:focus-visible {
   border-radius: 4px;
 }
 
-/* ---------- Slow diffused red cinematic background ---------- */
-.mesh-bg {
+/* ---------- Soft animated pastel blobs ---------- */
+.blob-stage {
   position: fixed;
   inset: 0;
   z-index: 0;
   pointer-events: none;
   overflow: hidden;
   isolation: isolate;
-  background: rgb(var(--mesh-base));
+  background: #f7f7f5;
+  filter: blur(clamp(36px, 5.2vw, 70px)) saturate(1.1);
 }
 
-.mesh-canvas {
+.blob {
   position: absolute;
+  border-radius: 50%;
+  opacity: 0.85;
+  will-change: transform, border-radius;
+}
+
+.blob--1 {
+  width: 46vmax;
+  height: 46vmax;
+  left: -8%;
+  top: -12%;
+  background: #c9d6ff;
+  animation: blob-m1 14s ease-in-out infinite alternate, blob-morph 9s ease-in-out infinite alternate;
+}
+
+.blob--2 {
+  width: 38vmax;
+  height: 38vmax;
+  right: -6%;
+  top: 6%;
+  background: #ffd9e4;
+  animation: blob-m2 16s ease-in-out infinite alternate, blob-morph 11s ease-in-out infinite alternate-reverse;
+}
+
+.blob--3 {
+  width: 42vmax;
+  height: 42vmax;
+  left: 18%;
+  bottom: -22%;
+  background: #d4f0e4;
+  animation: blob-m3 18s ease-in-out infinite alternate, blob-morph 10s ease-in-out infinite alternate;
+}
+
+.blob--4 {
+  width: 30vmax;
+  height: 30vmax;
+  right: 12%;
+  bottom: -8%;
+  background: #e6dcff;
+  animation: blob-m4 13s ease-in-out infinite alternate, blob-morph 8s ease-in-out infinite alternate-reverse;
+}
+
+.blob--5 {
+  width: 24vmax;
+  height: 24vmax;
+  left: 42%;
+  top: 22%;
+  background: #ffe9c9;
+  animation: blob-m5 15s ease-in-out infinite alternate, blob-morph 12s ease-in-out infinite alternate;
+}
+
+.blob-grain {
+  position: fixed;
+  z-index: 0;
   inset: 0;
-  display: block;
-  width: 100%;
-  height: 100%;
   pointer-events: none;
+  opacity: 0.35;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 .08 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+@keyframes blob-morph {
+  0% { border-radius: 50% 50% 50% 50%; }
+  25% { border-radius: 62% 38% 46% 54% / 55% 60% 40% 45%; }
+  50% { border-radius: 38% 62% 58% 42% / 45% 38% 62% 55%; }
+  75% { border-radius: 55% 45% 36% 64% / 60% 44% 56% 40%; }
+  100% { border-radius: 44% 56% 64% 36% / 38% 62% 38% 62%; }
+}
+
+@keyframes blob-m1 {
+  0% { transform: translate(0, 0) scale(1) rotate(0); }
+  33% { transform: translate(38vw, 10vh) scale(1.25) rotate(60deg); }
+  66% { transform: translate(14vw, 48vh) scale(0.85) rotate(130deg); }
+  100% { transform: translate(52vw, 34vh) scale(1.1) rotate(200deg); }
+}
+
+@keyframes blob-m2 {
+  0% { transform: translate(0, 0) scale(1) rotate(0); }
+  33% { transform: translate(-40vw, 24vh) scale(0.85) rotate(-70deg); }
+  66% { transform: translate(-14vw, 50vh) scale(1.25) rotate(-140deg); }
+  100% { transform: translate(-48vw, 8vh) scale(1) rotate(-210deg); }
+}
+
+@keyframes blob-m3 {
+  0% { transform: translate(0, 0) scale(1) rotate(0); }
+  33% { transform: translate(36vw, -28vh) scale(1.2) rotate(80deg); }
+  66% { transform: translate(-30vw, -40vh) scale(0.88) rotate(150deg); }
+  100% { transform: translate(22vw, -10vh) scale(1.15) rotate(220deg); }
+}
+
+@keyframes blob-m4 {
+  0% { transform: translate(0, 0) scale(1) rotate(0); }
+  33% { transform: translate(-34vw, -34vh) scale(1.3) rotate(-90deg); }
+  66% { transform: translate(-8vw, -52vh) scale(0.8) rotate(-160deg); }
+  100% { transform: translate(-44vw, -16vh) scale(1.15) rotate(-240deg); }
+}
+
+@keyframes blob-m5 {
+  0% { transform: translate(0, 0) scale(1) rotate(0); }
+  33% { transform: translate(-30vw, 32vh) scale(1.35) rotate(100deg); }
+  66% { transform: translate(32vw, -6vh) scale(0.8) rotate(180deg); }
+  100% { transform: translate(-8vw, -24vh) scale(1.2) rotate(260deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .blob {
+    animation-duration: 120s;
+  }
 }
 
 .site-content {
@@ -583,7 +686,7 @@ html {
 }
 
 body {
-  background: #FFFFFF;
+  background: #f7f7f5;
   color: #000000;
   font-family: "Google Sans Flex", "Google Sans", Arial, sans-serif;
 }
@@ -611,10 +714,6 @@ h6 {
 }
 
 .site-grid {
-  display: none;
-}
-
-.mesh-bg::after {
   display: none;
 }
 

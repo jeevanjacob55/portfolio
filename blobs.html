@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Blobs</title>
+<style>
+:root{--bg:#f7f7f5;--b1:#c9d6ff;--b2:#ffd9e4;--b3:#d4f0e4;--b4:#e6dcff;--b5:#ffe9c9}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#f7f7f5}}
+:root[data-theme="dark"]{--bg:#f7f7f5}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%;background:var(--bg);overflow:hidden}
+.stage{position:fixed;inset:0;overflow:hidden;filter:blur(70px) saturate(1.1)}
+.blob{position:absolute;border-radius:50%;opacity:.85;will-change:transform}
+.b1{width:46vmax;height:46vmax;background:var(--b1);left:-8%;top:-12%;animation:m1 26s ease-in-out infinite alternate}
+.b2{width:38vmax;height:38vmax;background:var(--b2);right:-6%;top:6%;animation:m2 31s ease-in-out infinite alternate}
+.b3{width:42vmax;height:42vmax;background:var(--b3);left:18%;bottom:-22%;animation:m3 34s ease-in-out infinite alternate}
+.b4{width:30vmax;height:30vmax;background:var(--b4);right:12%;bottom:-8%;animation:m4 28s ease-in-out infinite alternate}
+.b5{width:24vmax;height:24vmax;background:var(--b5);left:42%;top:22%;animation:m5 37s ease-in-out infinite alternate}
+@keyframes m1{0%{transform:translate(0,0) scale(1)}50%{transform:translate(18vw,14vh) scale(1.15)}100%{transform:translate(8vw,30vh) scale(.92)}}
+@keyframes m2{0%{transform:translate(0,0) scale(1)}50%{transform:translate(-22vw,18vh) scale(.9)}100%{transform:translate(-10vw,34vh) scale(1.12)}}
+@keyframes m3{0%{transform:translate(0,0) scale(1)}50%{transform:translate(20vw,-16vh) scale(1.1)}100%{transform:translate(-14vw,-26vh) scale(.95)}}
+@keyframes m4{0%{transform:translate(0,0) scale(1)}50%{transform:translate(-18vw,-20vh) scale(1.2)}100%{transform:translate(6vw,-34vh) scale(.9)}}
+@keyframes m5{0%{transform:translate(0,0) scale(1)}50%{transform:translate(-16vw,20vh) scale(1.25)}100%{transform:translate(14vw,-12vh) scale(.85)}}
+.grain{position:fixed;inset:0;pointer-events:none;opacity:.35;mix-blend-mode:multiply;
+background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.5  0 0 0 0 0.5  0 0 0 0 0.5  0 0 0 .08 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+.b1{animation:m1 14s ease-in-out infinite alternate,morph 9s ease-in-out infinite alternate}
+.b2{animation:m2 16s ease-in-out infinite alternate,morph 11s ease-in-out infinite alternate-reverse}
+.b3{animation:m3 18s ease-in-out infinite alternate,morph 10s ease-in-out infinite alternate}
+.b4{animation:m4 13s ease-in-out infinite alternate,morph 8s ease-in-out infinite alternate-reverse}
+.b5{animation:m5 15s ease-in-out infinite alternate,morph 12s ease-in-out infinite alternate}
+@keyframes morph{0%{border-radius:50% 50% 50% 50%}25%{border-radius:62% 38% 46% 54%/55% 60% 40% 45%}50%{border-radius:38% 62% 58% 42%/45% 38% 62% 55%}75%{border-radius:55% 45% 36% 64%/60% 44% 56% 40%}100%{border-radius:44% 56% 64% 36%/38% 62% 38% 62%}}
+@keyframes m1{0%{transform:translate(0,0) scale(1) rotate(0)}33%{transform:translate(38vw,10vh) scale(1.25) rotate(60deg)}66%{transform:translate(14vw,48vh) scale(.85) rotate(130deg)}100%{transform:translate(52vw,34vh) scale(1.1) rotate(200deg)}}
+@keyframes m2{0%{transform:translate(0,0) scale(1) rotate(0)}33%{transform:translate(-40vw,24vh) scale(.85) rotate(-70deg)}66%{transform:translate(-14vw,50vh) scale(1.25) rotate(-140deg)}100%{transform:translate(-48vw,8vh) scale(1) rotate(-210deg)}}
+@keyframes m3{0%{transform:translate(0,0) scale(1) rotate(0)}33%{transform:translate(36vw,-28vh) scale(1.2) rotate(80deg)}66%{transform:translate(-30vw,-40vh) scale(.88) rotate(150deg)}100%{transform:translate(22vw,-10vh) scale(1.15) rotate(220deg)}}
+@keyframes m4{0%{transform:translate(0,0) scale(1) rotate(0)}33%{transform:translate(-34vw,-34vh) scale(1.3) rotate(-90deg)}66%{transform:translate(-8vw,-52vh) scale(.8) rotate(-160deg)}100%{transform:translate(-44vw,-16vh) scale(1.15) rotate(-240deg)}}
+@keyframes m5{0%{transform:translate(0,0) scale(1) rotate(0)}33%{transform:translate(-30vw,32vh) scale(1.35) rotate(100deg)}66%{transform:translate(32vw,-6vh) scale(.8) rotate(180deg)}100%{transform:translate(-8vw,-24vh) scale(1.2) rotate(260deg)}}
+@media (prefers-reduced-motion:reduce){.blob{animation-duration:120s}}
+</style>
+</head>
+<body>
+<div class="stage" aria-hidden="true">
+<div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div><div class="blob b4"></div><div class="blob b5"></div>
+</div>
+<div class="grain" aria-hidden="true"></div>
+</body>
+</html>
