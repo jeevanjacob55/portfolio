@@ -2284,15 +2284,13 @@ h6 {
   }
 
   .mobile-menu {
-    top: 100%;
-    right: 0;
-    left: auto;
-    width: min(280px, calc(100vw - 32px));
+    top: calc(100% + 8px);
+    right: auto;
+    left: 0;
+    width: 100%;
     margin-top: 0;
     border: 1px solid #e8e8eb;
-    border-top: 0;
-    border-right: 0;
-    border-radius: 0 0 0 16px;
+    border-radius: 20px;
     background: #fff;
     box-shadow: 0 12px 24px rgb(20 20 28 / 0.1);
     -webkit-backdrop-filter: none;
