@@ -24,7 +24,8 @@ export default function Projects() {
               <button
                 key={c}
                 onClick={() => setFilter(c)}
-                className={`text-sm px-3.5 py-1.5 rounded-full border transition-colors ${
+                aria-pressed={filter === c}
+                className={`project-filter-tab text-sm px-3.5 py-1.5 rounded-full border transition-colors ${
                   filter === c
                     ? "border-mint/50 text-mint bg-mint/10"
                     : "border-hairline text-muted hover:text-ink"

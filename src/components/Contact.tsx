@@ -14,13 +14,13 @@ export default function Contact() {
           </p>
 
           <div className="space-y-3.5 text-sm">
-            <a href={`mailto:${profile.email}`} className="flex items-center gap-3 text-muted hover:text-ink transition-colors">
+            <a href={`mailto:${profile.email}`} className="contact-link flex items-center gap-3 text-muted hover:text-ink transition-colors">
               <Mail size={16} /> {profile.email}
             </a>
-            <a href={profile.social.linkedin} target="_blank" rel="noreferrer" className="flex items-center gap-3 text-muted hover:text-ink transition-colors">
+            <a href={profile.social.linkedin} target="_blank" rel="noreferrer" className="contact-link flex items-center gap-3 text-muted hover:text-ink transition-colors">
               <Linkedin size={16} /> LinkedIn
             </a>
-            <a href={profile.social.github} target="_blank" rel="noreferrer" className="flex items-center gap-3 text-muted hover:text-ink transition-colors">
+            <a href={profile.social.github} target="_blank" rel="noreferrer" className="contact-link flex items-center gap-3 text-muted hover:text-ink transition-colors">
               <Github size={16} /> GitHub
             </a>
             <p className="flex items-center gap-3 text-muted">

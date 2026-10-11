@@ -414,31 +414,15 @@ textarea:focus-visible {
   top: 0;
   left: 0;
   z-index: 100;
-  width: 0;
-  height: 0;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #ffffff;
+  mix-blend-mode: difference;
   opacity: 0;
   pointer-events: none;
   transition: opacity 180ms ease;
   will-change: transform;
-}
-
-.cursor-follower__orb {
-  display: block;
-  width: 16px;
-  height: 16px;
-  border: 0;
-  border-radius: 50%;
-  background: #000000;
-  transform: translate(-50%, -50%) scale(1);
-  transition: transform 220ms var(--ease-standard);
-}
-
-.cursor-follower.is-hovered .cursor-follower__orb {
-  transform: translate(-50%, -50%) scale(1.375);
-}
-
-.cursor-follower.is-clicking .cursor-follower__orb {
-  transform: translate(-50%, -50%) scale(0.9);
 }
 
 @media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
@@ -1803,6 +1787,11 @@ html::-webkit-scrollbar-thumb:hover {
 }
 
 @media (max-width: 767px) {
+  html.has-scroll-reveal .site-content main > section[id]#experience {
+    opacity: 1;
+    transform: none;
+  }
+
   .site-content section[id]:not(#home) {
     padding-top: 5rem;
     padding-bottom: 5rem;
@@ -2318,4 +2307,52 @@ h6 {
   .mobile-menu {
     transition-duration: 0.01ms;
   }
+}
+
+#contact .contact-link {
+  width: fit-content;
+  max-width: 100%;
+  border-radius: 3px;
+  text-decoration: none;
+  transition: color 180ms ease, transform 180ms var(--ease-standard);
+}
+
+#contact .contact-link:hover {
+  color: #14141c;
+  transform: translateX(4px);
+}
+
+#contact .contact-link svg {
+  flex: none;
+  transition: transform 180ms var(--ease-standard);
+}
+
+#contact .contact-link:hover svg {
+  transform: scale(1.08);
+}
+
+#contact .contact-link:focus-visible {
+  outline: 2px solid rgb(20 20 28 / 0.55);
+  outline-offset: 4px;
+}
+
+#projects .project-filter-tab {
+  transition: color 180ms ease, background-color 180ms ease, border-color 180ms ease, transform 180ms var(--ease-standard), box-shadow 180ms ease;
+}
+
+#projects .project-filter-tab:hover {
+  border-color: rgb(0 0 0 / 0.34);
+  background-color: rgb(0 0 0 / 0.045);
+  color: #000;
+  box-shadow: 0 4px 10px rgb(20 20 28 / 0.08);
+  transform: translateY(-2px);
+}
+
+#projects .project-filter-tab[aria-pressed="true"]:hover {
+  background-color: rgb(0 0 0 / 0.14);
+}
+
+#projects .project-filter-tab:focus-visible {
+  outline: 2px solid rgb(20 20 28 / 0.55);
+  outline-offset: 3px;
 }

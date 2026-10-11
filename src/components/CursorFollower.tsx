@@ -27,15 +27,15 @@ export default function CursorFollower() {
     let visible = false;
 
     const placeCursor = (x: number, y: number) => {
-      cursor.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+      const offset = 7;
+      cursor.style.transform = `translate3d(${x - offset}px, ${y - offset}px, 0)`;
     };
 
     const animate = (time: number) => {
       frameId = 0;
       const elapsed = Math.min(time - lastFrameTime, 48);
       lastFrameTime = time;
-      // A longer response time gives the follower a deliberate, slow drift.
-      const easing = 1 - Math.exp(-elapsed / 190);
+      const easing = 1 - Math.exp(-elapsed / 220);
 
       currentX += (targetX - currentX) * easing;
       currentY += (targetY - currentY) * easing;
@@ -71,69 +71,38 @@ export default function CursorFollower() {
       }
     };
 
-    const closestInteractive = (target: EventTarget | null) =>
-      target instanceof Element
-        ? target.closest("a, button, [role='button'], .cursor-hover-target")
-        : null;
-
-    const handlePointerOver = (event: PointerEvent) => {
-      if (event.pointerType === "touch") return;
-      cursor.classList.toggle("is-hovered", Boolean(closestInteractive(event.target)));
-    };
-
     const handlePointerOut = (event: PointerEvent) => {
       if (event.pointerType === "touch") return;
       if (event.relatedTarget === null) {
         visible = false;
         cursor.style.opacity = "0";
-        cursor.classList.remove("is-hovered", "is-clicking");
         if (frameId) window.cancelAnimationFrame(frameId);
         frameId = 0;
-        return;
       }
-
-      cursor.classList.toggle("is-hovered", Boolean(closestInteractive(event.relatedTarget)));
-    };
-
-    const handlePointerDown = (event: PointerEvent) => {
-      if (event.pointerType !== "touch") cursor.classList.add("is-clicking");
-    };
-
-    const handlePointerUp = (event: PointerEvent) => {
-      if (event.pointerType !== "touch") cursor.classList.remove("is-clicking");
     };
 
     const handleWindowBlur = () => {
       visible = false;
       cursor.style.opacity = "0";
-      cursor.classList.remove("is-hovered", "is-clicking");
       if (frameId) window.cancelAnimationFrame(frameId);
       frameId = 0;
     };
 
+    document.body.classList.add("has-custom-cursor");
     document.addEventListener("pointermove", handlePointerMove);
-    document.addEventListener("pointerover", handlePointerOver);
     document.addEventListener("pointerout", handlePointerOut);
-    document.addEventListener("pointerdown", handlePointerDown);
-    document.addEventListener("pointerup", handlePointerUp);
-    document.addEventListener("pointercancel", handlePointerUp);
     window.addEventListener("blur", handleWindowBlur);
 
     return () => {
+      document.body.classList.remove("has-custom-cursor");
       document.removeEventListener("pointermove", handlePointerMove);
-      document.removeEventListener("pointerover", handlePointerOver);
       document.removeEventListener("pointerout", handlePointerOut);
-      document.removeEventListener("pointerdown", handlePointerDown);
-      document.removeEventListener("pointerup", handlePointerUp);
-      document.removeEventListener("pointercancel", handlePointerUp);
       window.removeEventListener("blur", handleWindowBlur);
       if (frameId) window.cancelAnimationFrame(frameId);
     };
   }, [enabled]);
 
   return (
-    <div ref={cursorRef} className="cursor-follower" aria-hidden="true">
-      <span className="cursor-follower__orb" />
-    </div>
+    <div ref={cursorRef} className="cursor-follower" aria-hidden="true" />
   );
 }

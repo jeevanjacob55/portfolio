@@ -4,8 +4,26 @@ import { experience } from "../data/experience";
 import SectionHeading from "./SectionHeading";
 
 export default function Experience() {
-  const [activeId, setActiveId] = useState<string | null>(experience[0]?.id ?? null);
+  const [activeId, setActiveId] = useState<string | null>(() =>
+    window.matchMedia("(hover: hover) and (pointer: fine)").matches
+      ? experience[0]?.id ?? null
+      : null
+  );
   const leaveTimer = useRef<number | null>(null);
+
+  useEffect(() => {
+    const pointerCapability = window.matchMedia("(hover: hover) and (pointer: fine)");
+    const collapseForTouch = () => {
+      if (pointerCapability.matches) return;
+      if (leaveTimer.current !== null) window.clearTimeout(leaveTimer.current);
+      leaveTimer.current = null;
+      setActiveId(null);
+    };
+
+    collapseForTouch();
+    pointerCapability.addEventListener("change", collapseForTouch);
+    return () => pointerCapability.removeEventListener("change", collapseForTouch);
+  }, []);
 
   useEffect(() => () => {
     if (leaveTimer.current !== null) window.clearTimeout(leaveTimer.current);
