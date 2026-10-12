@@ -3,14 +3,17 @@ interface SectionHeadingProps {
   title: string;
   description?: string;
   id?: string;
+  hideEyebrow?: boolean;
 }
 
-export default function SectionHeading({ index, title, description, id }: SectionHeadingProps) {
+export default function SectionHeading({ index, title, description, id, hideEyebrow = false }: SectionHeadingProps) {
   return (
     <header className="section-heading">
-      <p className="section-heading__eyebrow">
-        <span>{index}</span> / {title}
-      </p>
+      {!hideEyebrow && (
+        <p className="section-heading__eyebrow">
+          <span>{index}</span> / {title}
+        </p>
+      )}
       <h2 id={id} className="section-heading__title">{title}</h2>
       {description && <p className="section-heading__description">{description}</p>}
     </header>
