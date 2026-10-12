@@ -8,11 +8,13 @@ export const heroContent = {
   ],
   roles: [
     "I'm a FullStack Developer",
-    "I'm an Aspiring Data Engineer",
-    "I'm an AI & Computer Vision Enthusiast",
+    "I love figuring out how things work",
+    "I'm always asking 'What if?'",
     "I'm a Curious Human Being",
     "I Love Coding",
-    "I'm a Learner",
+    "I like solving problems that matter",
+    "I Learn by building Things",
+    "I believe there's always a better way"
   ],
   buttons: {
     primary: "View My Work",
