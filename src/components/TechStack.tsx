@@ -7,7 +7,7 @@ export default function TechStack() {
   return (
     <section id="stack" className="py-24 px-6 sm:px-10">
       <div className="max-w-5xl mx-auto">
-        <SectionHeading index="05" title="Technical stack" />
+        <SectionHeading title="Technical stack" />
 
         <div className="grid sm:grid-cols-2 gap-5">
           {skills.map((group, i) => (

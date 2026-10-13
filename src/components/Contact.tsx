@@ -6,7 +6,7 @@ export default function Contact() {
   return (
     <section id="contact" className="py-24 px-6 sm:px-10">
       <div className="max-w-3xl mx-auto">
-        <SectionHeading index="06" title="Get in touch" />
+        <SectionHeading title="Get in touch" />
         <div className="mx-auto max-w-md">
           <p className="text-muted leading-relaxed mb-8 text-center">
             Open to full-stack and backend engineering roles, freelance work, and interesting

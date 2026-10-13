@@ -10,7 +10,7 @@ export default function About() {
   return (
     <section id="about" className="hero-about px-6 sm:px-10" aria-labelledby="about-heading">
       <div className="max-w-5xl mx-auto">
-        <SectionHeading index="03" title="About" id="about-heading" />
+        <SectionHeading title="About" id="about-heading" />
         <div className="about-layout">
           <div className="about-copy">
             <div className="about-bio">

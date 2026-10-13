@@ -48,9 +48,9 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
             <button
               onClick={onClose}
               aria-label="Close"
-              className="absolute top-3 right-3 z-10 w-9 h-9 rounded-lg bg-black/50 backdrop-blur flex items-center justify-center text-ink hover:bg-black/70"
+              className="project-modal__close sticky top-3 z-10 -mb-9 mr-3 ml-auto flex h-11 w-11 items-center justify-center"
             >
-              <X size={16} />
+              <X size={20} strokeWidth={1.8} />
             </button>
 
             {showProjectImageCarousels && (

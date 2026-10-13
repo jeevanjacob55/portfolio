@@ -81,7 +81,7 @@ export default function Experience() {
   return (
     <section id="experience" className="py-24 px-6 sm:px-10">
       <div className="max-w-5xl mx-auto">
-        <SectionHeading index="01" title="Experience" hideEyebrow />
+        <SectionHeading title="Experience" />
 
         <div className="experience-timeline">
           {experience.map((entry) => {
