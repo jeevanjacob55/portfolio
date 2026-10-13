@@ -1770,24 +1770,6 @@ html::-webkit-scrollbar-thumb:hover {
   }
 }
 
-@media (max-width: 360px) {
-  .hero-actions {
-    width: 100%;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    gap: 8px;
-  }
-
-  .hero-action,
-  .hero-action--secondary {
-    width: auto;
-    min-width: 0;
-    flex: 1 1 0;
-    padding-inline: 8px;
-    white-space: nowrap;
-  }
-}
-
 @media (min-width: 1280px) {
   .site-content section[id]:not(#home) > .mx-auto {
     width: min(100%, 1200px);
