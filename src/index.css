@@ -713,17 +713,6 @@ h6 {
   scroll-margin-top: 88px;
 }
 
-html.has-scroll-reveal .site-content main > section[id]:not(#home) {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 600ms var(--ease-out), transform 600ms var(--ease-out);
-}
-
-html.has-scroll-reveal .site-content main > section[id]:not(#home).is-revealed {
-  opacity: 1;
-  transform: translateY(0);
-}
-
 .site-content section[id]:not(#home) > .mx-auto {
   width: 100%;
 }
@@ -1793,11 +1782,6 @@ html::-webkit-scrollbar-thumb:hover {
 }
 
 @media (max-width: 767px) {
-  html.has-scroll-reveal .site-content main > section[id]#experience {
-    opacity: 1;
-    transform: none;
-  }
-
   .site-content section[id]:not(#home) {
     padding-top: 5rem;
     padding-bottom: 5rem;
@@ -1873,10 +1857,6 @@ html::-webkit-scrollbar-thumb:hover {
     display: none;
   }
 
-  html.has-scroll-reveal .site-content main > section[id]:not(#home) {
-    opacity: 1;
-    transform: none;
-  }
 }
 
 /* Keep the reference dimensions ahead of the legacy responsive overrides above. */
@@ -1960,6 +1940,10 @@ h6 {
 .experience-entry__role {
   flex: 1;
   text-align: left;
+}
+
+.education-entry__main {
+  cursor: default;
 }
 
 /* Glass pill navigation, adapted from the supplied reference. */

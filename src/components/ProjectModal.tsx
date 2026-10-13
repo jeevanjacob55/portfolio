@@ -39,66 +39,67 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
             role="dialog"
             aria-modal="true"
             aria-label={project.title}
-            className="project-modal relative w-full max-w-2xl max-h-[85vh] overflow-y-auto rounded-2xl border border-hairline bg-card"
+            className="project-modal relative flex max-h-[85vh] w-full max-w-2xl flex-col overflow-hidden rounded-2xl border border-hairline bg-card"
             initial={{ opacity: 0, y: 8, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 4, scale: 0.98 }}
             transition={{ duration: 0.25, ease: "easeOut" }}
           >
-            <button
-              onClick={onClose}
-              aria-label="Close"
-              className="project-modal__close sticky top-3 z-10 -mb-9 mr-3 ml-auto flex h-11 w-11 items-center justify-center"
-            >
-              <X size={20} strokeWidth={1.8} />
-            </button>
-
-            {showProjectImageCarousels && (
-              <ImageCarousel images={project.images} alt={project.title} />
-            )}
-
-            <div className="p-6 sm:p-8">
-              <p className="text-xs text-mint mb-2">{project.category}</p>
-              <h3 className="font-display text-2xl text-ink mb-4">{project.title}</h3>
-
-              <div className="space-y-3 text-muted text-sm leading-relaxed mb-6">
-                {project.longDescription.map((p, i) => (
-                  <p key={i}>{p}</p>
-                ))}
-              </div>
-
-              <div className="flex flex-wrap gap-2 mb-6">
-                {project.tags.map((t) => (
-                  <span key={t} className="text-xs px-2.5 py-1 rounded-full border border-hairline text-muted">
-                    {t}
-                  </span>
-                ))}
-              </div>
-
-              {(project.github || project.demo) && (
-                <div className="flex gap-4">
-                  {project.github && (
-                    <a
-                      href={project.github}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex items-center gap-1.5 text-sm text-ink border border-hairline rounded-lg px-4 py-2 hover:border-mint/50 hover:text-mint transition-colors"
-                    >
-                      <Github size={15} /> Code
-                    </a>
-                  )}
-                  {project.demo && (
-                    <a
-                      href={project.demo}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex items-center gap-1.5 text-sm text-ink border border-hairline rounded-lg px-4 py-2 hover:border-mint/50 hover:text-mint transition-colors"
-                    >
-                      <ExternalLink size={15} /> Live demo
-                    </a>
-                  )}
-                </div>
+            <div className="min-h-0 flex-1 overflow-y-auto">
+              <button
+                onClick={onClose}
+                aria-label="Close"
+                className="project-modal__close sticky top-2 z-10 -mb-7 mr-2 ml-auto flex h-7 w-7 items-center justify-center"
+              >
+                <X size={14} strokeWidth={1.8} />
+              </button>
+              {showProjectImageCarousels && (
+                <ImageCarousel images={project.images} alt={project.title} />
               )}
+
+              <div className="p-6 sm:p-8">
+                <p className="text-xs text-mint mb-2">{project.category}</p>
+                <h3 className="font-display text-2xl text-ink mb-4">{project.title}</h3>
+
+                <div className="space-y-3 text-muted text-sm leading-relaxed mb-6">
+                  {project.longDescription.map((p, i) => (
+                    <p key={i}>{p}</p>
+                  ))}
+                </div>
+
+                <div className="flex flex-wrap gap-2 mb-6">
+                  {project.tags.map((t) => (
+                    <span key={t} className="text-xs px-2.5 py-1 rounded-full border border-hairline text-muted">
+                      {t}
+                    </span>
+                  ))}
+                </div>
+
+                {(project.github || project.demo) && (
+                  <div className="flex gap-4">
+                    {project.github && (
+                      <a
+                        href={project.github}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-center gap-1.5 text-sm text-ink border border-hairline rounded-lg px-4 py-2 hover:border-mint/50 hover:text-mint transition-colors"
+                      >
+                        <Github size={15} /> Code
+                      </a>
+                    )}
+                    {project.demo && (
+                      <a
+                        href={project.demo}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-center gap-1.5 text-sm text-ink border border-hairline rounded-lg px-4 py-2 hover:border-mint/50 hover:text-mint transition-colors"
+                      >
+                        <ExternalLink size={15} /> Live demo
+                      </a>
+                    )}
+                  </div>
+                )}
+              </div>
             </div>
           </motion.div>
         </motion.div>
